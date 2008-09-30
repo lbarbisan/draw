@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-binding"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-docking"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-form"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-jdk6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-resources"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-sandbox"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-support"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
