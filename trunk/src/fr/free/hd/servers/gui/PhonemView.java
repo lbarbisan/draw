@@ -16,19 +16,26 @@
 package fr.free.hd.servers.gui;
 
 import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.CloseAction;
+
+import fr.free.hd.servers.dao.PhonemsDAO;
+import fr.free.hd.servers.entities.Phonem;
 
 /**
  * Shows the owners and their pets in a tree structure.
@@ -42,6 +49,8 @@ import org.springframework.richclient.dialog.CloseAction;
  */
 public class PhonemView extends AbstractView implements ApplicationListener {
 
+	protected PhonemsDAO phonemsDAO; 
+	
     public void componentClosed() {}
     @Override
     public void componentFocusGained() {}
@@ -56,26 +65,43 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	protected JComponent createControl() {
 		final JPanel view = new JPanel(new BorderLayout());
         
-		//final PhonemListModel model = new PhonemListModel();
-		/*final JList list = new JList(model);*/
-		final JList list = new JList();
+		Collection<Phonem> phonesList = phonemsDAO.getPhonems();
+		Map<String, Phonem> mapList = new HashMap<String, Phonem>();
+		for(Phonem phonem : phonesList)
+		{
+			mapList.put(phonem.getPhonem(), phonem);
+		}
+		
+		final PhonemListModel model = new PhonemListModel(mapList);
+		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
-        
 		final JTextField field = new JTextField();
 		
+		list.setCellRenderer(new PhonemListRenderer());
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setVisibleRowCount(1);
+
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
         
-		
-		PropertyChangeListener property  = new PropertyChangeListener(){
+		field.addCaretListener(new CaretListener(){
+
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				//model.setPhonem(field.getText());
+			public void caretUpdate(CaretEvent e) {
+				model.setPhonem(field.getText());
 			}
-		};
-		field.addPropertyChangeListener("Text", property);
+			
+		});
+		
 		
         return view;
+	}
+	public PhonemsDAO getPhonemsDAO() {
+		return phonemsDAO;
+	}
+	public void setPhonemsDAO(PhonemsDAO phonemsDAO) {
+		this.phonemsDAO = phonemsDAO;
 	}
 
 }

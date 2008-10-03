@@ -213,6 +213,11 @@
   <bean id="PhonemView"
     class="org.springframework.richclient.application.support.DefaultViewDescriptor">
     <property name="viewClass" value="fr.free.hd.servers.gui.PhonemView" />
+    <property name="viewProperties">
+      <map>
+        <entry key="phonemsDAO" value-ref="PhonemsDAO" />
+      </map>
+    </property>
   </bean>
 <!-- 
   <bean id="newOwnerWizard" class="org.springframework.richclient.samples.petclinic.ui.NewOwnerWizard">

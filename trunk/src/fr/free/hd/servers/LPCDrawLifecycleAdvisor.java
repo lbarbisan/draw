@@ -15,6 +15,8 @@
  */
 package fr.free.hd.servers;
 
+import java.awt.Dimension;
+
 import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.config.ApplicationWindowConfigurer;
 import org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor;
@@ -42,9 +44,9 @@ public class LPCDrawLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor
     {
         super.onPreWindowOpen(configurer);
         // comment out to hide the menubar, toolbar, or reduce window size...
-        //configurer.setShowMenuBar(false);
-        //configurer.setShowToolBar(false);
-        //configurer.setInitialSize(new Dimension(640, 480));
+        configurer.setShowMenuBar(false);
+        configurer.setShowToolBar(false);
+        configurer.setInitialSize(new Dimension(800, 300));
     }
 
     /**

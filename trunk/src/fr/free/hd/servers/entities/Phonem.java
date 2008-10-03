@@ -41,6 +41,10 @@ public class Phonem extends BaseEntity {
 		this.phonem = phonem.toLowerCase();
 	}
 
-
-
+	@Override
+	public String toString() {
+		return "[" + 
+			(this.isNew() ? "NoId]" : this.getId() + "]")
+					+ this.getPhonem() + "(" + this.getPicture()  + ")";
+	}
 }
