@@ -8,24 +8,31 @@ package fr.free.hd.servers.entities;
  */
 public class Phonem extends BaseEntity {
 
-	private String picture;
 	private String phonem;
+	private HandKeyEnum handKey;
+	private HandPositionEnum handPosition;
+	private MouthVowelEnum mouthVowel;
 	
+	public MouthVowelEnum getMouthVowel() {
+		return mouthVowel;
+	}
+
+	public void setMouthVowel(MouthVowelEnum mouthVowel) {
+		this.mouthVowel = mouthVowel;
+	}
+
 	/**
 	 * For ORM Engine purpose, don't use it.
 	 */
 	public Phonem(){}
 	
-	public Phonem(String phonem, String picture) {
+	public Phonem(String phonem, HandKeyEnum handKey, HandPositionEnum handPosition,
+			MouthVowelEnum mouthVowel) {
 		super();
-		this.picture = picture;
 		this.phonem = phonem;
-	}
-	public String getPicture() {
-		return this.picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
+		this.handKey = handKey;
+		this.handPosition = handPosition;
+		this.mouthVowel = mouthVowel;
 	}
 
 	public String getPhonem() {
@@ -45,6 +52,22 @@ public class Phonem extends BaseEntity {
 	public String toString() {
 		return "[" + 
 			(this.isNew() ? "NoId]" : this.getId() + "]")
-					+ this.getPhonem() + "(" + this.getPicture()  + ")";
+					+ this.getPhonem() + "(" + this.handKey + "." + this.handPosition + "." + this.mouthVowel + ")";
+	}
+
+	public HandKeyEnum getHandKey() {
+		return handKey;
+	}
+
+	public void setHandKey(HandKeyEnum handKey) {
+		this.handKey = handKey;
+	}
+
+	public HandPositionEnum getHandPosition() {
+		return handPosition;
+	}
+
+	public void setHandPosition(HandPositionEnum handPosition) {
+		this.handPosition = handPosition;
 	}
 }

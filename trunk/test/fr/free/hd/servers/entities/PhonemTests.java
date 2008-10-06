@@ -13,9 +13,13 @@ public class PhonemTests {
 
 	@Test
 	public void testHasPet() {
-		Phonem phonem = new Phonem("TA", "C:\\Test");
+		Phonem phonem = new Phonem("TA", HandKeyEnum.HAND_KEY_2M, 
+				HandPositionEnum.HAND_POSITION_BOUCHE, 
+				MouthVowelEnum.MOUTH_VOWEL_A_);
 		Assert.assertNotNull(phonem.getPhonem());
-		Assert.assertNotNull(phonem.getPicture());
+		Assert.assertNotNull(phonem.getHandKey());
+		Assert.assertNotNull(phonem.getHandPosition());
+		Assert.assertNotNull(phonem.getMouthVowel());
 	}
 
 }
