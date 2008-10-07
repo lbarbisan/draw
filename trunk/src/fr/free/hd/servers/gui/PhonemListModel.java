@@ -19,6 +19,7 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 	
 	protected Map<String, Phonem> phonemsCaches  = new HashMap<String, Phonem>();
 	protected List<Phonem> phonemList = new ArrayList<Phonem>();
+	protected String phonems = "";
 	
 	public PhonemListModel(Map<String, Phonem> phonemsCaches)
 	{
@@ -28,16 +29,42 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 	//TODO : Mettre en place un meilleur algorithme
 	public void setPhonem(String phonems)
 	{
-		phonemList.clear();
-		if(phonems==null)
+		if(phonems.equals(this.phonems))
 		{
 			return;
 		}
 		
+		if(phonems==null || phonems =="")
+		{
+			phonemList.clear();
+			fireContentsChanged(this, 0, 0);
+		}
+		else if(phonems.startsWith(this.phonems) && this.phonems !="")
+		{
+			int start = this.phonems.length();
+			this.phonems = phonems;
+			decompile(start);
+			fireIntervalAdded(this, start, phonems.length());
+		}
+		else
+		{
+			this.phonems =phonems;
+			phonemList.clear();
+			decompile(0);
+			fireContentsChanged(this, 0, phonemList.size()-1);
+		}
+		if(phonems==null)
+		{
+			return;
+		}	
+	}
+	
+	private void decompile(int start)
+	{
 		int windowMaxSize=5;
 		int windowSize=1;
-		int windowInitialStart=0;
-		int windowStart=0;
+		int windowInitialStart=start;
+		int windowStart=start;
 		while(windowStart<phonems.length())
 		{
 			//TODO: Regexp
@@ -68,7 +95,6 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 				windowSize++;
 			}
 		}
-		fireContentsChanged(this, 0, phonemList.size()-1);
 	}
 	
 	@Override

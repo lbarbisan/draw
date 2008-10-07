@@ -70,4 +70,22 @@ public class Phonem extends BaseEntity {
 	public void setHandPosition(HandPositionEnum handPosition) {
 		this.handPosition = handPosition;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Phonem)
+		{
+			return super.equals(obj);
+		}
+		
+		Phonem phonem = (Phonem)obj;
+		
+		if(this.phonem.equals(phonem.getPhonem()))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
 }

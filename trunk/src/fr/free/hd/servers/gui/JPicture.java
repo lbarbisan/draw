@@ -23,9 +23,7 @@ public class JPicture extends JPanel {
     
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	
-    private Image hand;
-    private Image mouth;
-    private Image face;
+    private BufferedImage buffer;
     private Phonem phonem;
     
     private Dimension dimension = new Dimension(248, 350);
@@ -36,6 +34,11 @@ public class JPicture extends JPanel {
     public JPicture(Phonem phonem)
     {
     	this.phonem = phonem;
+    	buffer = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
+    	Graphics2D g = buffer.createGraphics();
+    	g.drawImage(getFace(), 0, 0, dimension.width, dimension.height, this);
+        g.drawImage(getMouth(),dimension.width/4, 3*dimension.height/5, dimension.width/2, dimension.height/4, this);
+        drawHand(g, dimension.width, dimension.height);
     }
 
 
@@ -60,35 +63,21 @@ public class JPicture extends JPanel {
 	}
 
     public void paint(Graphics g) {
-        //Face
-        if (face == null) {
-            face = getFace();
-            g.drawImage(face, 0, 0, dimension.width, dimension.height, this);
-        }
-        
-        //Mouth
-        if (mouth == null) {
-        	mouth = getMouth();
-        	g.drawImage(mouth,dimension.width/4, 3*dimension.height/5, dimension.width/2, dimension.height/4, this);
-        }
-        
-        
-        if (hand == null) {
-        	drawHand((Graphics2D)g, dimension.width, dimension.height);
-        }        
+       g.drawImage(buffer, 0,0, this);
     }
     
     private void drawHand(Graphics2D g, int width, int height)
     {
     	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".JPG";
+    	Image hand = null;
     	if(!cachedImage.containsKey(handImagePath))
     	{
     		hand = getToolkit().getImage(LPCDraw.class.getResource(handImagePath));
-    		/*try {
+    		try {
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(hand, 2);
                 tracker.waitForID(2);
-       	 } catch (Exception e) {}*/
+       	 } catch (Exception e) {}
     	}
     	else
     	{
@@ -125,14 +114,15 @@ public class JPicture extends JPanel {
     private Image getMouth()
     {
     	String mouthImagePath = "mouth\\" + phonem.getMouthVowel().toString() + ".JPG";
+    	Image mouth = null;
     	if(!cachedImage.containsKey(mouthImagePath))
     	{
     		mouth = ImageResizeHelper.resize(getToolkit().getImage(LPCDraw.class.getResource(mouthImagePath)), dimension.height/5, dimension.width/5);
-    		/*try {
+    		try {
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(mouth, 0);
                 tracker.waitForID(0);
-       	 } catch (Exception e) {}*/
+       	 } catch (Exception e) {}
     	}
     	else
     	{
@@ -145,14 +135,15 @@ public class JPicture extends JPanel {
     private Image getFace()
     {
     	String faceImagePath = "visage.jpg";
+    	Image face = null;
     	if(!cachedImage.containsKey(faceImagePath))
     	{
     		face = getToolkit().getImage(LPCDraw.class.getResource(faceImagePath));
-    		/*try {
+    		try {
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(face, 1);
                 tracker.waitForID(1);
-       	 } catch (Exception e) {}*/
+       	 } catch (Exception e) {}
     	}
     	else
     	{
