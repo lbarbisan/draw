@@ -96,7 +96,7 @@ public abstract class AbstractDAOTests extends AbstractTransactionalJUnit4Spring
 		int found = phonems.size();
 		Phonem phonem = new Phonem("ta",HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		this.phonemsDAO.storePhonem(phonem);
 		// assertTrue(!owner.isNew()); -- NOT TRUE FOR TOPLINK (before commit)
 		phonems = this.phonemsDAO.findPhonems("ta");
@@ -107,11 +107,11 @@ public abstract class AbstractDAOTests extends AbstractTransactionalJUnit4Spring
 	public void getPhonems() {
 		Phonem phonem = new Phonem("TB", HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		this.phonemsDAO.storePhonem(phonem);
 		phonem = new Phonem("TC", HandKeyEnum.HAND_KEY_2M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		this.phonemsDAO.storePhonem(phonem);
 		Collection<Phonem> vets = this.phonemsDAO.getPhonems();
 		// Use the inherited countRowsInTable() convenience method (from

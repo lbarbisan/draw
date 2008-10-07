@@ -25,19 +25,19 @@ public class PhonemListModelTest {
 		Phonem phonem = new Phonem("TA", 
 				HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("TA", phonem);
 		phonem = new Phonem("TB",HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("TB", phonem);
 		phonem = new Phonem("FA", HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("FA", phonem);
 		phonem = new Phonem("FB", HandKeyEnum.HAND_KEY_1M, 
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A_);
+				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("FB", phonem);
 		
 		model = new PhonemListModel(maps);

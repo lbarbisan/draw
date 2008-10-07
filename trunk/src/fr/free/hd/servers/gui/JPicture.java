@@ -1,13 +1,13 @@
 package fr.free.hd.servers.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -21,7 +21,9 @@ public class JPicture extends JPanel {
 	 */
 	private static final long serialVersionUID = 911569452984025191L;
     
-    private BufferedImage hand;
+	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
+	
+    private Image hand;
     private Image mouth;
     private Image face;
     private Phonem phonem;
@@ -61,57 +63,101 @@ public class JPicture extends JPanel {
         //Face
         if (face == null) {
             face = getFace();
+            g.drawImage(face, 0, 0, dimension.width, dimension.height, this);
         }
-        g.drawImage(face, 0, 0, dimension.width, dimension.height, this);
-        
         
         //Mouth
         if (mouth == null) {
         	mouth = getMouth();
+        	g.drawImage(mouth,dimension.width/4, 3*dimension.height/5, dimension.width/2, dimension.height/4, this);
         }
-        g.drawImage(mouth,dimension.width/4, 3*dimension.height/5, dimension.width/2, dimension.height/4, this);
         
         
-        if (hand == null || hand.getWidth() != dimension.width || hand.getHeight() != dimension.height) {
-        	drawHand((Graphics2D)g, dimension.width, dimension.height, 45);
+        if (hand == null) {
+        	drawHand((Graphics2D)g, dimension.width, dimension.height);
         }        
     }
     
-    private void drawHand(Graphics2D g, int width, int height, int deg)
+    private void drawHand(Graphics2D g, int width, int height)
     {
-    	Image hand = getToolkit().getImage(LPCDraw.class.getResource("hand\\hand_cvs.jpg"));
-    	 try {
-             MediaTracker tracker = new MediaTracker(this);
-             tracker.addImage(hand, 3);
-             tracker.waitForID(3);
-    	 } catch (Exception e) {}
+    	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".JPG";
+    	if(!cachedImage.containsKey(handImagePath))
+    	{
+    		hand = getToolkit().getImage(LPCDraw.class.getResource(handImagePath));
+    		/*try {
+                MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(hand, 2);
+                tracker.waitForID(2);
+       	 } catch (Exception e) {}*/
+    	}
+    	else
+    	{
+    		hand = cachedImage.get(handImagePath);
+    	}
     	     	
-    	g.rotate(Math.toRadians(deg));
-        g.translate(50,50);
+ 		
+    	switch(phonem.getHandPosition())
+    	{
+    	case HAND_POSITION_BOUCHE:
+            g.translate(90,240);
+            g.rotate(Math.toRadians(90));
+    		break;
+    	case HAND_POSITION_COTE:
+    		g.translate(25,180);
+    		g.rotate(Math.toRadians(45));
+    		break;
+    	case HAND_POSITION_COU:
+            g.translate(100,310);
+            g.rotate(Math.toRadians(90));
+    		break;
+    	case HAND_POSITION_MENTON:
+            g.translate(110,280);
+            g.rotate(Math.toRadians(90));
+    		break;
+    	case HAND_POSITION_PAUMETTE:
+    		g.translate(50,225);
+    		g.rotate(Math.toRadians(60));
+    		break;
+    	}
         g.drawImage(hand, 0, 0, this);
     }
     
     private Image getMouth()
     {
-        Image mouth = getToolkit().getImage(LPCDraw.class.getResource("mouth\\mouth_a.JPG"));
-        try {
-            MediaTracker tracker = new MediaTracker(this);
-            tracker.addImage(mouth, 0);
-            tracker.waitForID(0);
-        } catch (Exception e) {}
+    	String mouthImagePath = "mouth\\" + phonem.getMouthVowel().toString() + ".JPG";
+    	if(!cachedImage.containsKey(mouthImagePath))
+    	{
+    		mouth = ImageResizeHelper.resize(getToolkit().getImage(LPCDraw.class.getResource(mouthImagePath)), dimension.height/5, dimension.width/5);
+    		/*try {
+                MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(mouth, 0);
+                tracker.waitForID(0);
+       	 } catch (Exception e) {}*/
+    	}
+    	else
+    	{
+    		mouth = cachedImage.get(mouthImagePath);
+    	}
         
         return mouth;  
     }
     
     private Image getFace()
     {
-    	Image face = getToolkit().getImage(LPCDraw.class.getResource("visage.jpg"));
-        try {
-            MediaTracker tracker = new MediaTracker(this);
-            tracker.addImage(face, 1);
-            tracker.waitForID(1);
-        } catch (Exception e) {}
-        
+    	String faceImagePath = "visage.jpg";
+    	if(!cachedImage.containsKey(faceImagePath))
+    	{
+    		face = getToolkit().getImage(LPCDraw.class.getResource(faceImagePath));
+    		/*try {
+                MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(face, 1);
+                tracker.waitForID(1);
+       	 } catch (Exception e) {}*/
+    	}
+    	else
+    	{
+    		face = cachedImage.get(faceImagePath);
+    	}
         return face;
     }
 }
