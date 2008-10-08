@@ -20,6 +20,7 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 	protected Map<String, Phonem> phonemsCaches  = new HashMap<String, Phonem>();
 	protected List<Phonem> phonemList = new ArrayList<Phonem>();
 	protected String phonems = "";
+	protected int phonemsStart = 0;
 	
 	public PhonemListModel(Map<String, Phonem> phonemsCaches)
 	{
@@ -41,10 +42,10 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 		}
 		else if(phonems.startsWith(this.phonems) && this.phonems !="")
 		{
-			int start = this.phonems.length();
 			this.phonems = phonems;
-			decompile(start);
-			fireIntervalAdded(this, start, phonems.length());
+			int count = phonems.length() -1;
+			decompile(phonemsStart);
+			fireIntervalAdded(this, count, phonems.length()-1);
 		}
 		else
 		{
@@ -79,7 +80,7 @@ public class PhonemListModel extends AbstractListModel implements ListModel {
 			if(phonemsCaches.containsKey(potentialPhonem))
 			{
 				phonemList.add(phonemsCaches.get(potentialPhonem));
-				windowInitialStart = windowStart = windowStart+windowSize;
+				windowInitialStart = windowStart = start = windowStart+windowSize;
 				windowSize = 1;
 			}
 			//Move windows from + 1
