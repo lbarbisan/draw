@@ -26,26 +26,26 @@ public class PhonenListModel extends AbstractListModel
 		this.phonemCaches = caches;
 	}
 	
-	public void updateCollection(int start, int end, List<Position> tmpPosition) {
+	public void updateCollection(int start, int length, List<Position> tmpPosition) {
 			int linksValueIndex = 0 ;
 			int linksIndex = linksValueIndex;
 			int initialStartlinksValueIndex = linksValueIndex;
 			int initialFinallinksValueIndex = linksValueIndex;
 			
-			if(links.size()>0)
+			if(links.size()>0 && length!=0)
 			{
-				linksValueIndex = links.get(start);
-				initialFinallinksValueIndex = links.get(end);
+				initialFinallinksValueIndex = links.get(start+(length-1));
 				
-				for(int index = start;index <= end;index++)
+				for(int index = start;index < (start+length);index++)
 				{
 					if(links.get(start)>= 0)
 					{					
 						positions.remove((int)(links.get(start)));
-						for(int index2 = start+1;index2 < links.size();index2++)
+						for(int index2 = start;index2 < links.size();index2++)
 						{
-							links.set(index2,links.get(index2)-1);
+							links.set(index2,links.get(index2) - 1);
 						}
+						
 					}
 					allPositions.remove((int)start);
 					links.remove((int)start);
@@ -58,10 +58,18 @@ public class PhonenListModel extends AbstractListModel
 				Position position = tmpPosition.get(index);
 				
 				if(position.getPhonem()!=null)
-				{					
+				{
+					for(int index2 = start+index;index2 < links.size();index2++)
+					{
+						if(links.get(index2)>=0)
+						{
+							links.set(index2,links.get(index2)+1);
+						}
+					}
 					links.add(linksIndex,linksValueIndex);
 					positions.add(linksValueIndex, position);
 					linksValueIndex++;
+					
 				}
 				else
 				{
@@ -70,6 +78,7 @@ public class PhonenListModel extends AbstractListModel
 				allPositions.add(linksIndex,position);
 				linksIndex++;
 			}
+			
 			
 			if(initialFinallinksValueIndex > linksValueIndex)
 			{

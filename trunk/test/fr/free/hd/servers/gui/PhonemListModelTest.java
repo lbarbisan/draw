@@ -115,7 +115,7 @@ public class PhonemListModelTest {
 		position.setPhonem(maps.get("TB"));
 		positions.add(position);
 		model.updateCollection(0, 0, positions);
-		Assert.assertEquals(3, model.getSize());
+		Assert.assertEquals(4, model.getSize());
 	}
 	
 	@Test
@@ -137,7 +137,7 @@ public class PhonemListModelTest {
 		position.setString("TB");
 		position.setPhonem(maps.get("TB"));
 		positions.add(position);
-		model.updateCollection(0, 2, positions);
+		model.updateCollection(0, 3, positions);
 		Assert.assertEquals(2, model.getSize());
 	}
 	/*
