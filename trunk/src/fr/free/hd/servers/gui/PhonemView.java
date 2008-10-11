@@ -28,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -72,10 +74,14 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 			mapList.put(phonem.getPhonem(), phonem);
 		}
 		
-		final PhonemListModel model = new PhonemListModel(mapList);
+		final PhonenListModel model = new PhonenListModel(mapList);
+		
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
+		final PhonemDocumentListener documentListener = new PhonemDocumentListener(model);
+		
+		field.getDocument().addDocumentListener(documentListener);			
 		
 		list.setCellRenderer(new PhonemListRenderer());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -84,17 +90,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
-        
-		field.addCaretListener(new CaretListener(){
-
-			@Override
-			public void caretUpdate(CaretEvent e) {
-				model.setPhonem(field.getText());
-			}
-			
-		});
-		
-		
+        		
         return view;
 	}
 	public PhonemsDAO getPhonemsDAO() {
