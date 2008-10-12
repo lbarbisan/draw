@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
@@ -79,9 +80,9 @@ public class JPicture extends JPanel {
     	{
     		hand = getToolkit().getImage(LPCDraw.class.getResource(handImagePath));
     		try {
-              /*  MediaTracker tracker = new MediaTracker(this);
+                MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(hand, 0);
-                tracker.waitForID(0);*/
+                tracker.waitForID(0);
             hand = makeColorTransparent(hand, Color.GREEN);
             cachedImage.put(handImagePath, hand);
        	 } catch (Exception e) {e.printStackTrace();}
@@ -99,8 +100,7 @@ public class JPicture extends JPanel {
             g.rotate(Math.toRadians(90));
     		break;
     	case HAND_POSITION_COTE:
-    		g.translate(25,180);
-    		g.rotate(Math.toRadians(45));
+    		g.translate(0,180);
     		break;
     	case HAND_POSITION_COU:
             g.translate(100,310);
@@ -126,9 +126,9 @@ public class JPicture extends JPanel {
     	{
     		mouth = getToolkit().getImage(LPCDraw.class.getResource(mouthImagePath));
     		try {
-            /*    MediaTracker tracker = new MediaTracker(this);
+                MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(mouth, 1);
-                tracker.waitForID(1);*/
+                tracker.waitForID(1);
             //mouth = ImageResizeHelper.resize(mouth, dimension.height/4, dimension.width/4);
                 //ImageResizeHelper.resize(mouth, dimension.height/4, dimension.width/4)
             mouth = makeColorTransparent(mouth, Color.GREEN);
@@ -151,9 +151,9 @@ public class JPicture extends JPanel {
     	{
     		face = getToolkit().getImage(LPCDraw.class.getResource(faceImagePath));
     		try {
-            /*    MediaTracker tracker = new MediaTracker(this);
+                MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(face, 2);
-                tracker.waitForID(2);*/
+                tracker.waitForID(2);
        	 } catch (Exception e) {e.printStackTrace();}
     	}
     	else

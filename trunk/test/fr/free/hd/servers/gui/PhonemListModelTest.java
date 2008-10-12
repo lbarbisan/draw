@@ -46,6 +46,18 @@ public class PhonemListModelTest {
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
 				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("FB", phonem);
+		phonem = new Phonem("U", HandKeyEnum.HAND_KEY_1M, 
+				HandPositionEnum.HAND_POSITION_BOUCHE, 
+				MouthVowelEnum.MOUTH_VOWEL_A);
+		maps.put("U", phonem);
+		phonem = new Phonem("I", HandKeyEnum.HAND_KEY_1M, 
+				HandPositionEnum.HAND_POSITION_BOUCHE, 
+				MouthVowelEnum.MOUTH_VOWEL_A);
+		maps.put("I", phonem);
+		phonem = new Phonem("UI", HandKeyEnum.HAND_KEY_1M, 
+				HandPositionEnum.HAND_POSITION_BOUCHE, 
+				MouthVowelEnum.MOUTH_VOWEL_A);
+		maps.put("UI", phonem);
 		
 		model = new PhonenListModel(maps);
 	}
@@ -166,5 +178,11 @@ public class PhonemListModelTest {
 		model.setString("TATB");
 		model.setString("sdfsdsTA");
 		Assert.assertEquals(1, model.getSize());
+	}
+	
+	@Test
+	public void testParserGourmand() throws BadLocationException {
+		model.setString("LUI");
+		Assert.assertEquals(2, model.getSize());
 	}
 }

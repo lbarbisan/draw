@@ -124,6 +124,7 @@ public class PhonenListModel extends AbstractListModel
 	private List<Phonem> decompile(String string)
 	{
 		List<Phonem> phonemList =  new ArrayList<Phonem>();
+		Phonem current = null;
 		
 		int windowMaxSize=5;
 		int windowSize=1;
@@ -133,22 +134,30 @@ public class PhonenListModel extends AbstractListModel
 		while(windowStart<string.length())
 		{
 			//TODO: Regexp
-			String potentialPhonem = string.substring(windowStart, ((windowStart + windowSize > string.length())? string.length() - 1 : (windowStart + windowSize)));
+			String potentialPhonem = string.substring(windowStart, 
+					((windowStart + windowSize > string.length())? string.length() : (windowStart + windowSize)));
 			
 			if(phonemCaches.containsKey(potentialPhonem))
 			{
-				phonemList.add(phonemCaches.get(potentialPhonem));
-				
-				windowInitialStart = windowStart = windowStart+windowSize;
-				windowSize = 1;
+				current = phonemCaches.get(potentialPhonem);
 			}
+			
 			//Move windows from + 1
-			else if((windowSize)>=windowMaxSize)
+			if((windowSize)>=windowMaxSize)
 			{
-				
-				windowInitialStart++;
-				windowStart = windowInitialStart;
-				windowSize = 1;
+				if(current!=null)
+				{
+					phonemList.add(current);
+				    windowInitialStart = windowStart = windowStart+current.getPhonem().length();
+					windowSize = 1;
+				}
+				else
+				{
+					windowInitialStart++;
+					windowStart = windowInitialStart;
+					windowSize = 1;
+				}
+				current = null;
 			}
 			//
 			else
