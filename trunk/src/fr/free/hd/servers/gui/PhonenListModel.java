@@ -113,7 +113,7 @@ public class PhonenListModel extends AbstractListModel
 	
 	@Override
 	public Object getElementAt(int index) {
-		return positions.get(index);
+		return positions.get(index).getPhonem();
 	}
 
 	@Override

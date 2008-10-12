@@ -20,7 +20,7 @@ public class PhonemDocumentListener implements DocumentListener {
 	public void changedUpdate(DocumentEvent e) {
 		int cursor=0;
 		int start=0;
-		int end=0;
+		int length=0;
 		String subString; 
 
 		try {
@@ -36,7 +36,7 @@ public class PhonemDocumentListener implements DocumentListener {
 			if(model.getAllPositions().get(index).getStart()<= (e.getOffset()+e.getLength())
 			&& (model.getAllPositions().get(index).getStart() + model.getAllPositions().get(index).getString().length())> (e.getOffset()+e.getLength()))
 			{
-				end = index;
+				length = index;
 			}
 		}
 		
@@ -49,19 +49,19 @@ public class PhonemDocumentListener implements DocumentListener {
 		//Il est possible de prendre +1 ?
 		if(cursor< (model.getAllPositions().size()-1))
 		{
-			end = cursor +1;
+			length = cursor +1;
 		}
 		
 		
 			subString = e.getDocument().getText(
 					model.getAllPositions().get(start).getStart()
-					, 	model.getAllPositions().get(end).getStart() 
+					, 	model.getAllPositions().get(length).getStart() 
 						- model.getAllPositions().get(start).getStart()
-						+ model.getAllPositions().get(end).getString().length()
+						+ model.getAllPositions().get(length).getString().length()
 						+ e.getLength());
 			
-		List<Position> tmpPosition = decompile(subString);
-		model.updateCollection(start, end, tmpPosition);
+		List<Position> tmpPosition = decompile(model.getAllPositions().get(start).getStart(), subString);
+		model.updateCollection(start, length, tmpPosition);
 		
 		} catch (BadLocationException e1) {
 			// TODO Auto-generated catch block
@@ -73,13 +73,26 @@ public class PhonemDocumentListener implements DocumentListener {
 	public void insertUpdate(DocumentEvent e) {
 		int cursor=0;
 		int start=0;
-		int end=0;
+		int charStart = 0;
+		int length=0;
 		
 		try 
 		{
 			String subString = null;
+			charStart = e.getOffset();
+			
+			if(model.getAllPositions().size()==0)
+			{
+					subString = e.getDocument().getText(charStart, e.getLength());
+			}
+			else if(e.getOffset()==model.getAllPositions().size())
+			{
+					subString = e.getDocument().getText(charStart, e.getLength());
+					start = charStart;
+					length = 0;
+			}
 			//Si la liste est vide inutile de chercher à faire quqoie ce soit
-			if(model.getAllPositions().size()>0)
+			else
 			{
 				//1. Retrouve la position concernée par l'insertion
 				for(int index = 0;index <model.getAllPositions().size();index++)
@@ -93,34 +106,27 @@ public class PhonemDocumentListener implements DocumentListener {
 				}
 				
 				//2. Prend un interval de +1, -1 la position, si l'insertion concerne une phonem d'avant ou d'après
-				start = end = cursor;		
+				start = cursor;
+				length = 0;
 					//Il est possible de prendre -1 ?
 					if(cursor>0)
 					{
 						start = cursor -1;
+						length++;
 					}
 					//Il est possible de prendre +1 ?
 					if(cursor< (model.getAllPositions().size()-1))
 					{
-						end = cursor +1;
+						length++;
 					}
 				
-				subString = e.getDocument().getText(
-						model.getAllPositions().get(start).getStart()
-						, 	model.getAllPositions().get(end).getStart() 
-							- model.getAllPositions().get(start).getStart()
-							+ e.getLength());
-				
-			}
-			else
-			{
-				
-					subString = e.getDocument().getText(e.getOffset(), e.getLength());
+				charStart = model.getAllPositions().get(start).getStart();
+				subString = e.getDocument().getText(charStart,model.getAllPositions().get(length).getStart() - charStart + e.getLength());
 			}
 		
-		
-			List<Position> tmpPosition = decompile(subString);
-			model.updateCollection(start, end, tmpPosition);
+			List<Position> tmpPosition = decompile(charStart, subString);
+			
+			model.updateCollection(start, length, tmpPosition);
 		
 		} catch (BadLocationException e1) {
 			// TODO Auto-generated catch block
@@ -132,47 +138,49 @@ public class PhonemDocumentListener implements DocumentListener {
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		int start=0;
-		int end=0;
+		int length=0;
 		int cursor=0;
-		String subString; 
+		
+		String subString;
 	try
 	{
 		for(int index = 0;index <model.getAllPositions().size();index++)
 		{
 			if(model.getAllPositions().get(index).getStart()<= e.getOffset()
-			&& (model.getAllPositions().get(index).getStart() + model.getAllPositions().get(index).getString().length())> e.getOffset())
+			&& (model.getAllPositions().get(index).getStart() + model.getAllPositions().get(index).getString().length())>= e.getOffset())
 			{
 				start = index;
 			}
 			if(model.getAllPositions().get(index).getStart()<= (e.getOffset()+e.getLength())
-			&& (model.getAllPositions().get(index).getStart() + model.getAllPositions().get(index).getString().length())> (e.getOffset()+e.getLength()))
+			&& (model.getAllPositions().get(index).getStart() + model.getAllPositions().get(index).getString().length())>= (e.getOffset()+e.getLength()))
 			{
-				end = index;
+				length = start-index;
 			}
 		}
 		
 		//2. Prend un interval de +1, -1 la position, si l'insertion concerne une phonem d'avant ou d'après
 		//Il est possible de prendre -1 ?
+		length=0;
 		if(cursor>0)
 		{
 			start = cursor -1;
+			length++;
 		}
 		//Il est possible de prendre +1 ?
 		if(cursor< (model.getAllPositions().size()-1))
 		{
-			end = cursor +1;
+			length++;
 		}
 		
 		
 			subString = e.getDocument().getText(
 					model.getAllPositions().get(start).getStart()
-					, 	model.getAllPositions().get(end).getStart() 
+					, 	model.getAllPositions().get(length).getStart() 
 						- model.getAllPositions().get(start).getStart()
-						+ model.getAllPositions().get(end).getString().length()
 						+ e.getLength());
 			
-		List<Position> tmpPosition = decompile(subString);
-		model.updateCollection(start, end, tmpPosition);
+		List<Position> tmpPosition = decompile(model.getAllPositions().get(start).getStart(), subString);
+		model.updateCollection(start, length, tmpPosition);
 		
 		} catch (BadLocationException e1) {
 			// TODO Auto-generated catch block
@@ -180,7 +188,7 @@ public class PhonemDocumentListener implements DocumentListener {
 		}
 	}
 	
-	private List<Position> decompile(String string)
+	private List<Position> decompile(int refstart, String string)
 	{
 		List<Position> phonemList =  new ArrayList<Position>();
 		
@@ -210,7 +218,7 @@ public class PhonemDocumentListener implements DocumentListener {
 				
 				Position position = new Position();
 				position.setPhonem(model.getPhonemCaches().get(potentialPhonem));
-				position.setStart(windowStart);
+				position.setStart(refstart + windowStart);
 				position.setString(potentialPhonem);
 
 				phonemList.add(position);
@@ -219,7 +227,7 @@ public class PhonemDocumentListener implements DocumentListener {
 				windowSize = 1;
 				
 				blankPosition = new Position();
-				blankPosition.setStart(windowStart);
+				blankPosition.setStart(refstart + windowStart);
 			}
 			//Move windows from + 1
 			else if((windowSize)>=windowMaxSize)
@@ -239,11 +247,13 @@ public class PhonemDocumentListener implements DocumentListener {
 		}
 		
 		//Fin de la chaîne de caractère, il reste des caractères non utilise ?
-		if(phonemList.size()>0 && (phonemList.get(phonemList.size()-1).getStart()+phonemList.get(phonemList.size()-1).getString().length() != string.length()))
+		if(phonemList.size()>0 && (
+				phonemList.get(phonemList.size()-1).getStart()
+				+ phonemList.get(phonemList.size()-1).getString().length() != string.length()))
 		{
 			
 			blankPosition.setStart(phonemList.get(phonemList.size()-1).getStart()+phonemList.get(phonemList.size()-1).getString().length());
-			blankPosition.setString(string.substring(blankPosition.getStart(),string.length()));	
+			blankPosition.setString(string.substring(blankPosition.getStart() - refstart,string.length()));	
 			phonemList.add(blankPosition);
 		}
 
