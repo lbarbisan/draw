@@ -26,8 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -75,13 +73,29 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		}
 		
 		final PhonenListModel model = new PhonenListModel(mapList);
-		
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
-		final PhonemDocumentListener documentListener = new PhonemDocumentListener(model);
-		
-		field.getDocument().addDocumentListener(documentListener);			
+
+		field.getDocument().addDocumentListener(new DocumentListener()
+		{
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				model.setString(field.getText());
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				model.setString(field.getText());
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				model.setString(field.getText()); 
+			}
+			
+		});
 		
 		list.setCellRenderer(new PhonemListRenderer());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

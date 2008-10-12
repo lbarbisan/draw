@@ -21,7 +21,6 @@ import fr.free.hd.servers.entities.Phonem;
 public class PhonemListModelTest {
 
 	private PhonenListModel model = null;
-	private PhonemDocumentListener listener = null;
 	private JTextField field;
 	private Map<String, Phonem> maps;
 	
@@ -49,10 +48,6 @@ public class PhonemListModelTest {
 		maps.put("FB", phonem);
 		
 		model = new PhonenListModel(maps);
-		listener = new PhonemDocumentListener(model);
-		
-		field = new JTextField();
-		field.getDocument().addDocumentListener(listener);
 	}
 	
 	@Test() 
@@ -68,128 +63,108 @@ public class PhonemListModelTest {
 	}
 	
 	@Test
-	public void testSetPhonemOne() throws BadLocationException {
-		field.getDocument().insertString(0, "TA",null);
+	public void testSetNew() throws BadLocationException {
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertMiddle() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TAFATB");
+		Assert.assertEquals(3, model.getSize());
+	}
+	
+	@Test
+	public void testSame() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertMiddle2() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TAFAFBTB");
+		Assert.assertEquals(4, model.getSize());
+	}
+	
+	@Test
+	public void testSetRemoveMiddle() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TAFAFBTB");
+		model.setString("TAFATB");
+		Assert.assertEquals(3, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertBegin() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("FATATB");
+		Assert.assertEquals(3, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertBegin2() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("FBFATATB");
+		Assert.assertEquals(4, model.getSize());
+	}
+	
+	@Test
+	public void testSetRemoveBegin1() throws BadLocationException {
+		model.setString("FBTATB");
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	@Test
+	public void testSetRemoveBegin2() throws BadLocationException {
+		model.setString("FAFBTATB");
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertEnd() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TATBFA");
+		Assert.assertEquals(3, model.getSize());
+	}
+	
+	@Test
+	public void testSetInsertEnd2() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TATBFBFA");
+		Assert.assertEquals(4, model.getSize());
+	}
+	
+	@Test
+	public void testSetRemoveEnd1() throws BadLocationException {
+		model.setString("TATBFB");
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	@Test
+	public void testSetRemoveEnd2() throws BadLocationException {
+		model.setString("TATBFAFB");
+		model.setString("TATB");
+		Assert.assertEquals(2, model.getSize());
+	}
+	
+	
+	@Test
+	public void testSetInvalidCharacterEnd() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("TAsdfsds");
 		Assert.assertEquals(1, model.getSize());
 	}
 	
 	@Test
-	public void testSetPhonemMore2() throws BadLocationException {
-		
-		List<Position> positions = new ArrayList<Position>();
-		Position position = new Position();
-		position.setPhonem(maps.get("TA"));
-		position.setStart(0);
-		position.setString("TA");
-		positions.add(position);
-		position = new Position();
-		position.setStart(2);
-		position.setString("  ,T");
-		positions.add(position);
-		position = new Position();
-		position.setStart(6);
-		position.setString("TB");
-		position.setPhonem(maps.get("TB"));
-		positions.add(position);
-		model.updateCollection(0, 0, positions);
-		Assert.assertEquals(2, model.getSize());
+	public void testSetInvalidCharacterStart() throws BadLocationException {
+		model.setString("TATB");
+		model.setString("sdfsdsTA");
+		Assert.assertEquals(1, model.getSize());
 	}
-	
-	@Test
-	public void testSetPhonemMore3() throws BadLocationException {
-		
-		testSetPhonemMore2();
-		List<Position> positions = new ArrayList<Position>();
-		Position position = new Position();
-		position.setPhonem(maps.get("TA"));
-		position.setStart(8);
-		position.setString("TA");
-		positions.add(position);
-		position = new Position();
-		position.setStart(10);
-		position.setString("  ,T");
-		positions.add(position);
-		position = new Position();
-		position.setStart(14);
-		position.setString("TB");
-		position.setPhonem(maps.get("TB"));
-		positions.add(position);
-		model.updateCollection(0, 0, positions);
-		Assert.assertEquals(4, model.getSize());
-	}
-	
-	@Test
-	public void testSetPhonemMore4() throws BadLocationException {
-		
-		testSetPhonemMore2();
-		List<Position> positions = new ArrayList<Position>();
-		Position position = new Position();
-		position.setPhonem(maps.get("TA"));
-		position.setStart(0);
-		position.setString("TA");
-		positions.add(position);
-		position = new Position();
-		position.setStart(2);
-		position.setString("  ,T");
-		positions.add(position);
-		position = new Position();
-		position.setStart(6);
-		position.setString("TB");
-		position.setPhonem(maps.get("TB"));
-		positions.add(position);
-		model.updateCollection(0, 3, positions);
-		Assert.assertEquals(2, model.getSize());
-	}
-	/*
-	@Test
-	public void testSetPhonemMore5() throws BadLocationException {
-		
-		testSetPhonemMore2();
-		List<Position> positions = new ArrayList<Position>();
-		Position position = new Position();
-		position.setPhonem(maps.get("TA"));
-		position.setStart(0);
-		position.setString("TA");
-		positions.add(position);
-		position = new Position();
-		position.setStart(2);
-		position.setString("  ,T");
-		positions.add(position);
-		position = new Position();
-		position.setStart(6);
-		position.setString("TB");
-		position.setPhonem(maps.get("TB"));
-		positions.add(position);
-		model.updateCollection(0, 0, positions);
-		Assert.assertEquals(4, model.getSize());
-	}*/
-	@Test
-	public void testSetPhonemMoreThanOne() throws BadLocationException {
-		field.getDocument().insertString(0, "TA",null);
-		field.getDocument().insertString(0, "TB",null);
-		Assert.assertEquals(2, model.getSize());
-	}
-	
-	@Test
-	public void testSetPhonemMoreThanOneAndWhiteSpace() throws BadLocationException {
-		field.getDocument().insertString(0, "TATB",null);
-		field.getDocument().insertString(0, " FAFB, T",null);
-		field.getDocument().insertString(0, "A TB",null);
-		Assert.assertEquals(5, model.getSize());
-	}
-	
-	@Test
-	public void testSetPhonemMoreThanOneAndWhiteSpace2() throws BadLocationException {
-		field.getDocument().insertString(0, "TATB",null);
-		field.getDocument().insertString(4, " FAFB, T",null);
-		field.getDocument().insertString(13, "A TB",null);
-		Assert.assertEquals(6, model.getSize());
-	}
-	
-	/*@Test
-	public void testSetPhonemMoreThanOneAndInvalidPhonem() {
-		model.setPhonem("TATB GAGB, FB");
-		Assert.assertEquals(3, model.getSize());
-	}*/
-		
 }

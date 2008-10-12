@@ -16,9 +16,7 @@ public class PhonenListModel extends AbstractListModel
 	 */
 	private static final long serialVersionUID = -6273561806978963558L;
 	
-	private List<Integer> links = new ArrayList<Integer>();
-	private List<Position> allPositions = new ArrayList<Position>();
-	private List<Position> positions = new ArrayList<Position>();
+	private List<Phonem> positions = new ArrayList<Phonem>();
 	private Map<String, Phonem> phonemCaches = new HashMap<String, Phonem>();
 	
 	public PhonenListModel(Map<String, Phonem> caches)
@@ -26,94 +24,146 @@ public class PhonenListModel extends AbstractListModel
 		this.phonemCaches = caches;
 	}
 	
-	public void updateCollection(int start, int length, List<Position> tmpPosition) {
-			int linksValueIndex = 0 ;
-			int linksIndex = linksValueIndex;
-			int initialStartlinksValueIndex = linksValueIndex;
-			int initialFinallinksValueIndex = linksValueIndex;
-			
-			if(links.size()>0 && length!=0)
+	int start=0;
+	int end=0;
+	public void setString(String string)
+	{
+		List<Phonem> newPhonems = decompile(string);
+		int newIndex=0;
+		int oldIndex=0;
+		boolean different = false;
+		
+		if(positions.size()==0)
+		{
+			start = 0;
+			end=newPhonems.size()-1;
+		}
+		else
+		{
+			//1. Comparaison
+			while(newIndex< newPhonems.size()&& oldIndex < positions.size())
 			{
-				initialFinallinksValueIndex = links.get(start+(length-1));
-				
-				for(int index = start;index < (start+length);index++)
+				Phonem newPhonem = newPhonems.get(newIndex);
+				Phonem oldPhonem = positions.get(oldIndex);
+				if(!newPhonem.getPhonem().equals(oldPhonem.getPhonem()))
 				{
-					if(links.get(start)>= 0)
-					{					
-						positions.remove((int)(links.get(start)));
-						for(int index2 = start;index2 < links.size();index2++)
-						{
-							links.set(index2,links.get(index2) - 1);
-						}
-						
+					if(different==false)
+					{
+						different = true;
+						start = newIndex;
 					}
-					allPositions.remove((int)start);
-					links.remove((int)start);
+					//Ajout d'element
+					if(newPhonems.size()>positions.size())
+					{
+						newIndex++;
+					}
+					//Suppression d'element
+					else if(newPhonems.size()<positions.size())
+					{
+						oldIndex++;
+					}
+					//Mise à jour d'element
+					else
+					{
+						start = oldIndex;
+						oldIndex++;
+						newIndex++;
+					}
+					
 					
 				}
-			}
-			
-			for(int index =0;index < tmpPosition.size();index++)
-			{	
-				Position position = tmpPosition.get(index);
-				
-				if(position.getPhonem()!=null)
+				else if(newPhonem.getPhonem().equals(oldPhonem.getPhonem()) && different==true)
 				{
-					for(int index2 = start+index;index2 < links.size();index2++)
+					different=false;
+					//Ajout d'element
+					if(newPhonems.size()>positions.size())
 					{
-						if(links.get(index2)>=0)
-						{
-							links.set(index2,links.get(index2)+1);
-						}
+						end = newIndex-1;
 					}
-					links.add(linksIndex,linksValueIndex);
-					positions.add(linksValueIndex, position);
-					linksValueIndex++;
-					
+					//Suppression d'element
+					else if(newPhonems.size()<positions.size())
+					{
+						end = oldIndex-1;
+					}
+					//Mise à jour d'element
+					else
+					{
+						end = newIndex-1;	
+					}
+					newIndex++;
+					oldIndex++;
 				}
 				else
 				{
-					links.add(linksIndex,-1);
+					newIndex++;
+					oldIndex++;
 				}
-				allPositions.add(linksIndex,position);
-				linksIndex++;
 			}
+		}
+		//2. Notifiaction des nouveaux elements 
+		//Ajout d'elements
+		if(newPhonems.size()>positions.size())
+		{
+			fireIntervalAdded(this, start, end);
+		}
+		//Suppression d'elements
+		else if(newPhonems.size()<positions.size())
+		{
+			fireIntervalRemoved(this, start, end);
+		}
+		//Mise à jour d'elements
+		else
+		{
+			fireContentsChanged(this, start, end);	
+		}
+		
+		positions = newPhonems;
+	}
+
+	
+	private List<Phonem> decompile(String string)
+	{
+		List<Phonem> phonemList =  new ArrayList<Phonem>();
+		
+		int windowMaxSize=5;
+		int windowSize=1;
+		int windowInitialStart=0;
+		int windowStart=0;
+		
+		while(windowStart<string.length())
+		{
+			//TODO: Regexp
+			String potentialPhonem = string.substring(windowStart, ((windowStart + windowSize > string.length())? string.length() - 1 : (windowStart + windowSize)));
 			
-			
-			if(initialFinallinksValueIndex > linksValueIndex)
+			if(phonemCaches.containsKey(potentialPhonem))
 			{
-				if(initialStartlinksValueIndex!=linksValueIndex)
-				{
-					fireContentsChanged(this,initialStartlinksValueIndex , linksValueIndex);
-				}
-				fireIntervalRemoved(this, linksValueIndex, initialFinallinksValueIndex);
+				phonemList.add(phonemCaches.get(potentialPhonem));
+				
+				windowInitialStart = windowStart = windowStart+windowSize;
+				windowSize = 1;
 			}
-			else if(initialFinallinksValueIndex < linksValueIndex)
+			//Move windows from + 1
+			else if((windowSize)>=windowMaxSize)
 			{
-				if(initialStartlinksValueIndex!=initialFinallinksValueIndex)
-				{
-					fireContentsChanged(this,initialStartlinksValueIndex , initialFinallinksValueIndex);
-				}
-				fireIntervalRemoved(this, initialFinallinksValueIndex ,linksValueIndex);
+				
+				windowInitialStart++;
+				windowStart = windowInitialStart;
+				windowSize = 1;
 			}
+			//
 			else
 			{
-				fireContentsChanged(this,initialStartlinksValueIndex , initialFinallinksValueIndex);
+				windowSize++;
 			}
-	}
-
-	public List<Position> getAllPositions() {
-		return allPositions;
-	}
-
-	public Map<String, Phonem> getPhonemCaches() {
-		return phonemCaches;
+		}
+		
+		return phonemList;
 	}
 
 	
 	@Override
 	public Object getElementAt(int index) {
-		return positions.get(index).getPhonem();
+		return positions.get(index);
 	}
 
 	@Override
