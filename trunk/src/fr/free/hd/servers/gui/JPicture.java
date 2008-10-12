@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
@@ -28,7 +27,6 @@ public class JPicture extends JPanel {
     
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	
-    private BufferedImage buffer;
     private Phonem phonem;
     
     private Dimension dimension = new Dimension(248, 350);
@@ -38,12 +36,7 @@ public class JPicture extends JPanel {
 
     public JPicture(Phonem phonem)
     {
-    	this.phonem = phonem;
-    	buffer = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
-    	Graphics2D g = buffer.createGraphics();
-    	g.drawImage(getFace(), 0, 0, dimension.width, dimension.height, null);
-        g.drawImage(getMouth(),dimension.width/4, 3*dimension.height/5, null);
-        drawHand(g, dimension.width, dimension.height);
+    	this.phonem = phonem;    
     }
 
 
@@ -68,7 +61,14 @@ public class JPicture extends JPanel {
 	}
 
     public void paint(Graphics g) {
-       g.drawImage(buffer, 0,0, null);
+    	//buffer = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
+    	//Graphics2D g2 = buffer.createGraphics();
+    	Graphics2D g2 = (Graphics2D)g;
+    	g2.drawImage(getFace(), 0, 0, dimension.width, dimension.height, null);
+    	Image mouth = getMouth();
+    	g2.drawImage(getMouth(),(dimension.width - mouth.getWidth(null))/2, 3*dimension.height/5 +20, null);
+        
+        drawHand(g2, dimension.width, dimension.height);
     }
     
     private void drawHand(Graphics2D g, int width, int height)
@@ -78,13 +78,13 @@ public class JPicture extends JPanel {
     	if(!cachedImage.containsKey(handImagePath))
     	{
     		hand = getToolkit().getImage(LPCDraw.class.getResource(handImagePath));
-    		/*try {
-                MediaTracker tracker = new MediaTracker(null);
-                tracker.addImage(hand, 2);
-                tracker.waitForID(2);*/
+    		try {
+              /*  MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(hand, 0);
+                tracker.waitForID(0);*/
             hand = makeColorTransparent(hand, Color.GREEN);
             cachedImage.put(handImagePath, hand);
-       	 /*} catch (Exception e) {}*/
+       	 } catch (Exception e) {e.printStackTrace();}
     	}
     	else
     	{
@@ -120,22 +120,20 @@ public class JPicture extends JPanel {
     
     private Image getMouth()
     {
-    	String mouthImagePath = "mouth\\" + phonem.getMouthVowel().toString() + ".jpg";
+    	String mouthImagePath = "mouth/" + phonem.getMouthVowel().toString() + ".png";
     	Image mouth = null;
     	if(!cachedImage.containsKey(mouthImagePath))
     	{
     		mouth = getToolkit().getImage(LPCDraw.class.getResource(mouthImagePath));
-    		/*try {
-                MediaTracker tracker = new MediaTracker(null);
-                tracker.addImage(mouth, 0);
-                tracker.waitForID(0);*/
+    		try {
+            /*    MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(mouth, 1);
+                tracker.waitForID(1);*/
             //mouth = ImageResizeHelper.resize(mouth, dimension.height/4, dimension.width/4);
                 //ImageResizeHelper.resize(mouth, dimension.height/4, dimension.width/4)
             mouth = makeColorTransparent(mouth, Color.GREEN);
             cachedImage.put(mouthImagePath, mouth);
-       	/* } catch (Exception e) {
-       		 e.printStackTrace();
-       	 }*/
+       	 } catch (Exception e) {e.printStackTrace();}
     	}
     	else
     	{
@@ -152,11 +150,11 @@ public class JPicture extends JPanel {
     	if(!cachedImage.containsKey(faceImagePath))
     	{
     		face = getToolkit().getImage(LPCDraw.class.getResource(faceImagePath));
-    		/*try {
-                MediaTracker tracker = new MediaTracker(null);
-                tracker.addImage(face, 1);
-                tracker.waitForID(1);
-       	 } catch (Exception e) {}*/
+    		try {
+            /*    MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(face, 2);
+                tracker.waitForID(2);*/
+       	 } catch (Exception e) {e.printStackTrace();}
     	}
     	else
     	{
@@ -172,7 +170,7 @@ public class JPicture extends JPanel {
       public int markerRGB = color.getRGB() | 0xFF000000;
 
       public final int filterRGB(int x, int y, int rgb) {
-        if ( ( rgb | 0xFF000000 ) - 1 == markerRGB ) {
+        if ( ( rgb | 0xFF000000 ) == markerRGB ) {
           // Mark the alpha bits as zero - transparent
           return 0x00FFFFFF & rgb;
           }
