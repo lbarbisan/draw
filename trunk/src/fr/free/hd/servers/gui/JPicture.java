@@ -62,13 +62,11 @@ public class JPicture extends JPanel {
 	}
 
     public void paint(Graphics g) {
-    	//buffer = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
-    	//Graphics2D g2 = buffer.createGraphics();
     	Graphics2D g2 = (Graphics2D)g;
-    	g2.drawImage(getFace(), 0, 0, dimension.width, dimension.height, null);
     	Image mouth = getMouth();
-    	g2.drawImage(getMouth(),(dimension.width - mouth.getWidth(null))/2, 3*dimension.height/5 +20, null);
-        
+    	Image face = getFace();
+    	g2.drawImage(face, 0, 0, dimension.width, dimension.height, null);
+    	g2.drawImage(mouth,(dimension.width - mouth.getWidth(null))/2, 70*dimension.height/100 - mouth.getHeight(null)/2, null);
         drawHand(g2, dimension.width, dimension.height);
     }
     
@@ -83,9 +81,9 @@ public class JPicture extends JPanel {
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(hand, 0);
                 tracker.waitForID(0);
-            hand = makeColorTransparent(hand, Color.GREEN);
-            cachedImage.put(handImagePath, hand);
-       	 } catch (Exception e) {e.printStackTrace();}
+	            hand = makeColorTransparent(hand, Color.GREEN);
+	            cachedImage.put(handImagePath, hand);
+       	 	} catch (Exception e) {e.printStackTrace();}
     	}
     	else
     	{
