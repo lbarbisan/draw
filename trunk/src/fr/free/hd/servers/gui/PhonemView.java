@@ -31,6 +31,7 @@ import javax.swing.event.DocumentListener;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.CloseAction;
 
@@ -50,6 +51,7 @@ import fr.free.hd.servers.entities.Phonem;
 public class PhonemView extends AbstractView implements ApplicationListener {
 
 	protected PhonemsDAO phonemsDAO; 
+	protected PrintCommand printCommand = new PrintCommand();
 	
     public void componentClosed() {}
     @Override
@@ -61,6 +63,8 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {}
 
+	
+	
 	@Override
 	protected JComponent createControl() {
 		final JPanel view = new JPanel(new BorderLayout());
@@ -73,6 +77,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		}
 		
 		final PhonenListModel model = new PhonenListModel(mapList);
+		printCommand.setModel(model);
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
@@ -107,6 +112,12 @@ public class PhonemView extends AbstractView implements ApplicationListener {
         		
         return view;
 	}
+	@Override
+	protected void registerLocalCommandExecutors(PageComponentContext context) {
+		context.register("PrintCommand" , printCommand);
+	}
+	
+	
 	public PhonemsDAO getPhonemsDAO() {
 		return phonemsDAO;
 	}
