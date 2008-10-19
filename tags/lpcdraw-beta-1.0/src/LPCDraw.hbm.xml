@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+  - Mapping file for the Hibernate implementation of the Clinic interface.
+	-->
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<typedef name="handKey" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.HandKeyEnum</param>
+  	</typedef>
+  	<typedef name="handPosition" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.HandPositionEnum</param>
+  	</typedef>
+  	<typedef name="mouthVowel" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.MouthVowelEnum</param>
+  	</typedef>
+	<class name="fr.free.hd.servers.entities.Phonem" table="Phonem">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="phonem" column="phonem"/>
+		<property name="handKey" type="handKey"/>
+		<property name="handPosition" type="handPosition"/>
+		<property name="mouthVowel" type="mouthVowel"/>
+  	</class>
+</hibernate-mapping>
