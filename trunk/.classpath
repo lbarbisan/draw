@@ -17,5 +17,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/spring"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-sandbox"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-support"/>
+	<classpathentry kind="lib" path="lib/jasperreports-3.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

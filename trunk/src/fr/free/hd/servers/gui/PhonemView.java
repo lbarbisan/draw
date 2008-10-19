@@ -81,7 +81,6 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
-
 		field.getDocument().addDocumentListener(new DocumentListener()
 		{
 
