@@ -1,19 +1,12 @@
 package fr.free.hd.servers.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-
-import org.springframework.beans.factory.parsing.DefaultsDefinition;
 
 import fr.free.hd.servers.entities.Phonem;
 

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
@@ -30,7 +29,6 @@ public class FaceGenerator {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	private static Dimension dimension  = new Dimension(248, 350);
-	private static MediaTracker tracker = new MediaTracker(null);
 	
     public static Image Create(Phonem phonem) {
     	if(!cachedFinalImage.containsKey(phonem))
