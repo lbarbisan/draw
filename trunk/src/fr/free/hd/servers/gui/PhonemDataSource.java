@@ -8,13 +8,11 @@ import net.sf.jasperreports.engine.JRField;
 public class PhonemDataSource implements JRDataSource {
 
 	private PhonenListModel model;
-	private JPicture picture;
-	int index=0;
+	int index=-1;
 	
-	public PhonemDataSource(PhonenListModel model, JPicture picture)
+	public PhonemDataSource(PhonenListModel model)
 	{
 		this.model = model;
-		this.picture = picture;
 	}
 	
 	@Override
@@ -22,11 +20,11 @@ public class PhonemDataSource implements JRDataSource {
 	
 		if(field.getName().equals("phonem"))
 		{
-			return ((Phonem) model.getElementAt(index++)).getPhonem();
+			return ((Phonem) model.getElementAt(index)).getPhonem();
 		}
 		if(field.getName().equals("picture"))
 		{
-			return picture.getComponent(index);
+			return FaceGenerator.Create((Phonem) model.getElementAt(index)) ;
 		}
 		return null;
 	}
@@ -34,7 +32,7 @@ public class PhonemDataSource implements JRDataSource {
 	@Override
 	public boolean next() throws JRException {
 		
-		return (index < model.getSize());
+		return (index++ < (model.getSize()-1));
 	}
 
 }

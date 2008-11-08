@@ -78,7 +78,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		
 		final PhonenListModel model = new PhonenListModel(mapList);
 		printCommand.setModel(model);
-		printCommand.setEnabled(false);
+		//printCommand.setEnabled(true);
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();

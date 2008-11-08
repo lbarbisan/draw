@@ -16,10 +16,11 @@ import org.springframework.richclient.command.ActionCommand;
 
 import com.sun.corba.se.impl.interceptors.PICurrent;
 
+import fr.free.hd.servers.LPCDraw;
+
 public class PrintCommand extends ActionCommand {
 
 	private PhonenListModel model;
-	private JPicture picture;
 	
 	public PrintCommand()
 	{
@@ -31,7 +32,7 @@ public class PrintCommand extends ActionCommand {
 
 		try {
 			// - Chargement et compilation du rapport
-			JasperDesign jasperDesign = JRXmlLoader.load("D:\\Projects\\workspace-springrcp\\LPCDraw\\rsc\\fr\\free\\hd\\servers\\ui\\Simple.jrxml");
+			JasperDesign jasperDesign = JRXmlLoader.load(LPCDraw.class.getResourceAsStream("gui\\Simple.jrxml"));
 	
 	        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 	
@@ -40,7 +41,7 @@ public class PrintCommand extends ActionCommand {
 	        parameters.put("Titre", "Titre");
 	
 	        // - Execution du rapport
-	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new PhonemDataSource(model, picture));
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new PhonemDataSource(model));
 	        // - Création du rapport au format PDF
 	        JasperViewer.viewReport(jasperPrint);
 		} catch (JRException e) {
@@ -52,9 +53,4 @@ public class PrintCommand extends ActionCommand {
 	public void setModel(PhonenListModel model) {
 		this.model = model;
 	}
-	
-	public void setPicture(JPicture picture) {
-		this.picture = picture;
-	}
-
 }

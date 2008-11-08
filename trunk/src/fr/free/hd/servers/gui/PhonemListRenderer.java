@@ -6,47 +6,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
+import org.springframework.beans.factory.parsing.DefaultsDefinition;
+
 import fr.free.hd.servers.entities.Phonem;
 
-public class PhonemListRenderer implements ListCellRenderer {
+public class PhonemListRenderer extends DefaultListCellRenderer {
 
-	protected Map<String, JPicture> cachePicture = new HashMap<String, JPicture>();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7912817506483642111L;
 	
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		Phonem phonem = (Phonem)value;
 		
-		JPanel mainPanel = new JPanel(new BorderLayout());
+		this.setVerticalTextPosition(JLabel.BOTTOM);
+		this.setHorizontalTextPosition(JLabel.CENTER);
+		this.setHorizontalAlignment(JLabel.CENTER);
+		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		this.setText(phonem.getPhonem());
+		this.setIcon(new ImageIcon(FaceGenerator.Create(phonem)));
 		
-		JLabel label = new JLabel();
-		label.setVerticalTextPosition(JLabel.BOTTOM);
-		label.setHorizontalTextPosition(JLabel.CENTER);
-		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		label.setText(phonem.getPhonem());
-		mainPanel.add(label, BorderLayout.SOUTH);
-		
-		try
-		{
-			if(!cachePicture.containsKey(phonem.getPhonem()))
-			{
-				JPicture picture = new JPicture(phonem);
-				cachePicture.put(phonem.getPhonem(), picture);
-			}
-			mainPanel.add(cachePicture.get(phonem.getPhonem()), BorderLayout.CENTER);
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-		}
-		
-		return mainPanel;
+		return this;
 	}
 
 }
