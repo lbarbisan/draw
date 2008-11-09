@@ -100,8 +100,11 @@ public class PrintCommand extends ActionCommand {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			PdfPCell cell = new PdfPCell(new Paragraph(phonem.getPhonem()));
+			Paragraph p = new Paragraph(phonem.getPhonem());
+			p.setAlignment(Paragraph.ALIGN_CENTER);
+			PdfPCell cell = new PdfPCell(p);
 			cell.setFixedHeight(10);
+			cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 			innertable.addCell(cell);
 			table.addCell(innertable);
 		}
