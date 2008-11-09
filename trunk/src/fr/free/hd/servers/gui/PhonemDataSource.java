@@ -7,10 +7,10 @@ import net.sf.jasperreports.engine.JRField;
 
 public class PhonemDataSource implements JRDataSource {
 
-	private PhonenListModel model;
+	private StatementListModel model;
 	int index=-1;
 	
-	public PhonemDataSource(PhonenListModel model)
+	public PhonemDataSource(StatementListModel model)
 	{
 		this.model = model;
 	}

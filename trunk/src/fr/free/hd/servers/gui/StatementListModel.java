@@ -9,7 +9,7 @@ import javax.swing.AbstractListModel;
 
 import fr.free.hd.servers.entities.Phonem;
 
-public class PhonenListModel extends AbstractListModel
+public class StatementListModel extends AbstractListModel
 {
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class PhonenListModel extends AbstractListModel
 	private List<Phonem> positions = new ArrayList<Phonem>();
 	private Map<String, Phonem> phonemCaches = new HashMap<String, Phonem>();
 	
-	public PhonenListModel(Map<String, Phonem> caches)
+	public StatementListModel(Map<String, Phonem> caches)
 	{
 		this.phonemCaches = caches;
 	}

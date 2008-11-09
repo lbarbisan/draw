@@ -31,12 +31,13 @@ public class FaceGenerator {
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
 	
+	private static int initialHeightSize = 200;
+	
 	private static int mouthRatio = 200;
-	private static int handRatio = 30;
+	private static int handRatio = 300;
 	
 	private static int mouthYPercent = 680;
 	private static int mouthXPercent = 485;
-	private static int initialHeightSize = 350;
 	
 	private static int boucheX = 400;
 	private static int boucheY = 600;
@@ -70,13 +71,13 @@ public class FaceGenerator {
 	    	//DrawMouth
 	    	drawMouth(g2, phonem);
 	    	//Draw Hand
-	        drawHand(g2, dimension.width, dimension.height, phonem);
+	        drawHand(g2, phonem);
 	        cachedFinalImage.put(phonem, finalImage);
     	}
 		return cachedFinalImage.get(phonem);
     }
     
-    private static void drawHand(Graphics2D g, int width, int height, Phonem phonem)
+    private static void drawHand(Graphics2D g, Phonem phonem)
     {
     	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".JPG";
     	Image hand = null;
@@ -84,6 +85,9 @@ public class FaceGenerator {
     	{
     		try {
 				hand = ImageIO.read(LPCDraw.class.getResource(handImagePath));
+				int width = mouthRatio*dimension.width/1000;
+    			int height = width * hand.getHeight(null)/ hand.getWidth(null);
+    			hand = getScaledImage(hand, width, height);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

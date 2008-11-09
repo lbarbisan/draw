@@ -20,7 +20,7 @@ import fr.free.hd.servers.entities.Phonem;
 
 public class PhonemListModelTest {
 
-	private PhonenListModel model = null;
+	private StatementListModel model = null;
 	private JTextField field;
 	private Map<String, Phonem> maps;
 	
@@ -59,7 +59,7 @@ public class PhonemListModelTest {
 				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("UI", phonem);
 		
-		model = new PhonenListModel(maps);
+		model = new StatementListModel(maps);
 	}
 	
 	@Test() 

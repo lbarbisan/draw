@@ -18,6 +18,7 @@ package fr.free.hd.servers.gui;
 import java.awt.BorderLayout;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -28,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -76,9 +79,11 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 			mapList.put(phonem.getPhonem(), phonem);
 		}
 		
-		final PhonenListModel model = new PhonenListModel(mapList);
+		final StatementListModel model = new StatementListModel(mapList);
+		
 		printCommand.setModel(model);
-		//printCommand.setEnabled(true);
+		
+	
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
@@ -102,11 +107,31 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 			
 		});
 		
-		list.setCellRenderer(new PhonemListRenderer());
+		final PhonemListModel phonemModel = new PhonemListModel((List<Phonem>)phonesList);
+		final JList phonemList = new JList(phonemModel);
+		final JScrollPane spPhonemList = new JScrollPane(phonemList);
+		phonemList.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{
+			//private int oldIndex = -1;
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				  if (e.getValueIsAdjusting() == false) {
+					Phonem innerPhonem = (Phonem)phonemModel.getElementAt(phonemList.getSelectedIndex());
+					field.setText(field.getText() + innerPhonem.getPhonem());
+					//model.setString(field.getText());
+					//oldIndex = e.getFirstIndex();
+				
+			  }
+				  }
+		});
+		phonemList.setCellRenderer(new PhonemListRenderer());
+		
+		list.setCellRenderer(new StatementPhonemListRenderer());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(1);
 
+		view.add(spPhonemList, BorderLayout.WEST);
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
         		

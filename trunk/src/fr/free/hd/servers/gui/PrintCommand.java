@@ -25,7 +25,7 @@ import fr.free.hd.servers.entities.Phonem;
 
 public class PrintCommand extends ActionCommand {
 
-	private PhonenListModel model;
+	private StatementListModel model;
 	
 	public PrintCommand()
 	{
@@ -73,13 +73,13 @@ public class PrintCommand extends ActionCommand {
 		}
 	}
 
-	public void setModel(PhonenListModel model) {
+	public void setModel(StatementListModel model) {
 		this.model = model;
 	}
 	
 	
 	/*Création du tableau de notre emploi du temps*/	
-	public PdfPTable createTable(PhonenListModel model) throws BadElementException {
+	public PdfPTable createTable(StatementListModel model) throws BadElementException {
 		
 		PdfPTable table = new PdfPTable(model.getSize() > 6 ? 6 : model.getSize());
 		table.setSplitRows(false);
