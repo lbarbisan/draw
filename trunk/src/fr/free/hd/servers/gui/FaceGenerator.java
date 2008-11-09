@@ -31,7 +31,7 @@ public class FaceGenerator {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	private static int initialHeightSize = 200;
+	private static int initialHeightSize = 500;
 		
 	private static Dimension dimension  = null;
 	
@@ -123,7 +123,7 @@ public class FaceGenerator {
     	{
     		try {
     			mouth = ImageIO.read(LPCDraw.class.getResource(mouthImagePath));
-    			
+    			mouth = makeColorTransparent(mouth, Color.GREEN);	
     			int width = face.getMouthRatio()*dimension.width/1000;
     			int height = width * mouth.getHeight(null)/ mouth.getWidth(null);
     			mouth = getScaledImage(mouth, width, height);
@@ -132,7 +132,7 @@ public class FaceGenerator {
 				e1.printStackTrace();
 			}
 			
-            mouth = makeColorTransparent(mouth, Color.GREEN);
+            
             cachedImage.put(mouthImagePath, mouth);
        	
     	}
@@ -196,7 +196,7 @@ public class FaceGenerator {
      * @return - the new resized image
      */
     private static Image getScaledImage(Image srcImg, int w, int h){
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2.drawImage(srcImg, 0, 0, w, h, null);
