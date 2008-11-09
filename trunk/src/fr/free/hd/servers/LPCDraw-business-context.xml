@@ -14,6 +14,7 @@
 		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<bean id="PhonemsDAO" class="fr.free.hd.servers.dao.implementation.HibernatePhonemsDAO" />
+	<bean id="FaceDAO" class="fr.free.hd.servers.dao.implementation.HibernateFaceDAO" />
 	
 	<context:property-placeholder location="classpath:jdbc.properties" />
 

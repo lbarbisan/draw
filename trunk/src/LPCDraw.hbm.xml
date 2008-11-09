@@ -24,4 +24,23 @@
 		<property name="handPosition" type="handPosition"/>
 		<property name="mouthVowel" type="mouthVowel"/>
   	</class>
+  	<class name="fr.free.hd.servers.entities.Face" table="Face">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="picture"/>
+		<property name="mouthRatio"/>
+		<property name="handRatio"/>
+		<property name="mouthYPercent"/>
+		<property name="mouthXPercent"/>
+		<property name="boucheY"/>
+		<property name="coteX"/>
+		<property name="coteY"/>
+		<property name="couX"/>
+		<property name="couY"/>
+		<property name="mentonX"/>
+		<property name="mentonY"/>
+		<property name="paumetteX"/>
+		<property name="paumetteY"/>		
+  	</class>
 </hibernate-mapping>

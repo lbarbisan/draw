@@ -38,7 +38,9 @@ import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.CloseAction;
 
+import fr.free.hd.servers.dao.FaceDAO;
 import fr.free.hd.servers.dao.PhonemsDAO;
+import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 
 /**
@@ -53,7 +55,9 @@ import fr.free.hd.servers.entities.Phonem;
  */
 public class PhonemView extends AbstractView implements ApplicationListener {
 
-	protected PhonemsDAO phonemsDAO; 
+	protected PhonemsDAO phonemsDAO;
+	protected FaceDAO facesDao; 
+	
 	protected PrintCommand printCommand = new PrintCommand();
 	
     public void componentClosed() {}
@@ -80,9 +84,10 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		}
 		
 		final StatementListModel model = new StatementListModel(mapList);
+		Face face = facesDao.findFace("Visage.jpg");
 		
 		printCommand.setModel(model);
-		
+		printCommand.setFace(face);
 	
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
@@ -125,8 +130,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 				  }
 		});
 		phonemList.setCellRenderer(new PhonemListRenderer());
-		
-		list.setCellRenderer(new StatementPhonemListRenderer());
+		list.setCellRenderer(new StatementPhonemListRenderer(face));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(1);
@@ -148,6 +152,13 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	}
 	public void setPhonemsDAO(PhonemsDAO phonemsDAO) {
 		this.phonemsDAO = phonemsDAO;
+	}
+	
+	public FaceDAO getFacesDAO() {
+		return facesDao;
+	}
+	public void setFacesDAO(FaceDAO facesDao) {
+		this.facesDao = facesDao;
 	}
 
 }

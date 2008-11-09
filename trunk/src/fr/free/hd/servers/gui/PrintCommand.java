@@ -1,7 +1,6 @@
 package fr.free.hd.servers.gui;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,22 +9,21 @@ import java.io.IOException;
 import org.springframework.richclient.command.ActionCommand;
 
 import com.lowagie.text.BadElementException;
-import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Table;
-import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 
 public class PrintCommand extends ActionCommand {
 
 	private StatementListModel model;
+	private Face face;
 	
 	public PrintCommand()
 	{
@@ -77,6 +75,11 @@ public class PrintCommand extends ActionCommand {
 		this.model = model;
 	}
 	
+	public void setFace(Face face) {
+		this.face = face;
+	}
+	
+	
 	
 	/*Création du tableau de notre emploi du temps*/	
 	public PdfPTable createTable(StatementListModel model) throws BadElementException {
@@ -92,7 +95,7 @@ public class PrintCommand extends ActionCommand {
 			innertable.getDefaultCell().setFixedHeight(140);
 			Phonem phonem = (Phonem)model.getElementAt(index);
 			try {
-				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGenerator.Create(phonem), Color.WHITE));
+				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGenerator.Create(phonem, face), Color.WHITE));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

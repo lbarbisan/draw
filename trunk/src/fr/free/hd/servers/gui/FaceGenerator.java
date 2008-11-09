@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import fr.free.hd.servers.LPCDraw;
+import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 
 public class FaceGenerator {
@@ -30,54 +31,35 @@ public class FaceGenerator {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	
 	private static int initialHeightSize = 200;
-	
-	private static int mouthRatio = 200;
-	private static int handRatio = 300;
-	
-	private static int mouthYPercent = 680;
-	private static int mouthXPercent = 485;
-	
-	private static int boucheX = 400;
-	private static int boucheY = 600;
-	private static int coteX = 0;
-	private static int coteY = 400;
-	private static int couX = 400;
-	private static int couY = 800;
-	private static int mentonX = 500;
-	private static int mentonY = 700;
-	private static int paumetteX = 300;
-	private static int paumetteY = 500;
-	
-	
+		
 	private static Dimension dimension  = null;
 	
-    public static Image Create(Phonem phonem) {
+    public static Image Create(Phonem phonem, Face face) {
     	
     	if(!cachedFinalImage.containsKey(phonem))
     	{
 	    	//Get Face
-	    	Image face = getFace();
+	    	Image faceImage = getFace();
 	    	
 	    	//Create final image
-	    	int width = initialHeightSize* face.getWidth(null) / face.getHeight(null);
+	    	int width = initialHeightSize* faceImage.getWidth(null) / faceImage.getHeight(null);
 	    	dimension = new Dimension(width, initialHeightSize);
     		BufferedImage finalImage = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
 	    	Graphics2D g2 = (Graphics2D)finalImage.createGraphics();
 	    	
 	    	//Draw Face
-	    	g2.drawImage(face, 0, 0, dimension.width, dimension.height, null);
+	    	g2.drawImage(faceImage, 0, 0, dimension.width, dimension.height, null);
 	    	//DrawMouth
-	    	drawMouth(g2, phonem);
+	    	drawMouth(g2, phonem, face);
 	    	//Draw Hand
-	        drawHand(g2, phonem);
+	        drawHand(g2, phonem, face);
 	        cachedFinalImage.put(phonem, finalImage);
     	}
 		return cachedFinalImage.get(phonem);
     }
     
-    private static void drawHand(Graphics2D g, Phonem phonem)
+    private static void drawHand(Graphics2D g, Phonem phonem, Face face)
     {
     	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".JPG";
     	Image hand = null;
@@ -85,7 +67,7 @@ public class FaceGenerator {
     	{
     		try {
 				hand = ImageIO.read(LPCDraw.class.getResource(handImagePath));
-				int width = mouthRatio*dimension.width/1000;
+				int width = face.getHandRatio()*dimension.width/1000;
     			int height = width * hand.getHeight(null)/ hand.getWidth(null);
     			hand = getScaledImage(hand, width, height);
 			} catch (IOException e1) {
@@ -106,34 +88,34 @@ public class FaceGenerator {
     	switch(phonem.getHandPosition())
     	{
     	case HAND_POSITION_BOUCHE:
-    		g.translate(dimension.width*boucheX /1000,
-    					dimension.height*boucheY /1000);
+    		g.translate(dimension.width*face.getBoucheX() /1000,
+    					dimension.height*face.getBoucheY() /1000);
             g.rotate(Math.toRadians(90));
     		break;
     	case HAND_POSITION_COTE:
-    		g.translate(dimension.width*coteX /1000,
-						dimension.height*coteY /1000);
+    		g.translate(dimension.width*face.getCoteX() /1000,
+						dimension.height*face.getCoteY() /1000);
     		break;
     	case HAND_POSITION_COU:
-            g.translate(dimension.width*couX /1000,
-						dimension.height*couY /1000);
+            g.translate(dimension.width*face.getCouX() /1000,
+						dimension.height*face.getCouY() /1000);
             g.rotate(Math.toRadians(90));
     		break;
     	case HAND_POSITION_MENTON:
-            g.translate(dimension.width*mentonX /1000,
-						dimension.height*mentonY /1000);
+            g.translate(dimension.width*face.getMentonX() /1000,
+						dimension.height*face.getMentonY() /1000);
             g.rotate(Math.toRadians(90));
     		break;
     	case HAND_POSITION_PAUMETTE:
-    		g.translate(dimension.width*paumetteX /1000,
-						dimension.height*paumetteY /1000);
+    		g.translate(dimension.width*face.getPaumetteX() /1000,
+						dimension.height*face.getPaumetteY() /1000);
     		g.rotate(Math.toRadians(60));
     		break;
     	}
         g.drawImage(hand, 0, 0, null);
     }
     
-    private static void drawMouth(Graphics2D g, Phonem phonem)
+    private static void drawMouth(Graphics2D g, Phonem phonem, Face face)
     {
     	String mouthImagePath = "mouth/" + phonem.getMouthVowel().toString() + ".png";
     	Image mouth = null;
@@ -142,7 +124,7 @@ public class FaceGenerator {
     		try {
     			mouth = ImageIO.read(LPCDraw.class.getResource(mouthImagePath));
     			
-    			int width = mouthRatio*dimension.width/1000;
+    			int width = face.getMouthRatio()*dimension.width/1000;
     			int height = width * mouth.getHeight(null)/ mouth.getWidth(null);
     			mouth = getScaledImage(mouth, width, height);
 			} catch (IOException e1) {
@@ -159,8 +141,8 @@ public class FaceGenerator {
     		mouth = cachedImage.get(mouthImagePath);
     	}
         
-    	g.drawImage(mouth,	mouthXPercent*dimension.width/1000 - mouth.getWidth(null)/2,
-    						mouthYPercent*dimension.height/1000 - mouth.getHeight(null)/2, null);
+    	g.drawImage(mouth,	face.getMouthXPercent()*dimension.width/1000 - mouth.getWidth(null)/2,
+    						face.getMouthYPercent()*dimension.height/1000 - mouth.getHeight(null)/2, null);
     }
     
     private static Image getFace()

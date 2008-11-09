@@ -2,7 +2,7 @@ package fr.free.hd.servers.entities;
 
 public enum MouthVowelEnum {
 	MOUTH_VOWEL_O,
-	MOUTH_VOWEL_OO,
+	MOUTH_VOWEL_AU,
 	MOUTH_VOWEL_I,
 	MOUTH_VOWEL_OU,
 	MOUTH_VOWEL_E,
