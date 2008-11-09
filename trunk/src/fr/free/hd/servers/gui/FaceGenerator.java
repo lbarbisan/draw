@@ -31,7 +31,7 @@ public class FaceGenerator {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	private static int initialHeightSize = 500;
+	private static int initialHeightSize = 200;
 		
 	private static Dimension dimension  = null;
 	

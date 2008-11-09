@@ -40,7 +40,7 @@ public class HibernatePhonemsDAO implements PhonemsDAO {
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public Collection<Phonem> getPhonems() {
-		return transactionFactory.getCurrentSession().createQuery("from Phonem phonem").list();
+		return transactionFactory.getCurrentSession().createQuery("from Phonem phonem order by phonem.phonem").list();
 	}
 
 	@Transactional(readOnly = true)

@@ -28,6 +28,8 @@ public class StatementPhonemListRenderer extends DefaultListCellRenderer {
 			int index, boolean isSelected, boolean cellHasFocus) {
 		Phonem phonem = (Phonem)value;
 		
+		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		
 		this.setVerticalTextPosition(JLabel.BOTTOM);
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setHorizontalAlignment(JLabel.CENTER);
