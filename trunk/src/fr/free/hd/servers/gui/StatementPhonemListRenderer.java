@@ -10,6 +10,7 @@ import javax.swing.JList;
 
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
+import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
 
 public class StatementPhonemListRenderer extends DefaultListCellRenderer {
 
@@ -35,7 +36,7 @@ public class StatementPhonemListRenderer extends DefaultListCellRenderer {
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.setText(phonem.getPhonem());
-		this.setIcon(new ImageIcon(FaceGenerator.Create(phonem, face)));
+		this.setIcon(new ImageIcon(FaceGeneratorHelper.Create(phonem, face)));
 		
 		return this;
 	}

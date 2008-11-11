@@ -42,6 +42,7 @@ import fr.free.hd.servers.dao.FaceDAO;
 import fr.free.hd.servers.dao.PhonemsDAO;
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
+import fr.free.hd.servers.gui.command.PrintCommand;
 
 /**
  * Shows the owners and their pets in a tree structure.

@@ -43,4 +43,18 @@
 		<property name="paumetteX"/>
 		<property name="paumetteY"/>		
   	</class>
+  	<class name="fr.free.hd.servers.entities.Word" table="Word">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="word"/>
+		<list name="phonems"
+			table="WORD_PHONEM"
+			lazy="true"
+			cascade="save-update">
+			<key column="WORD_ID"/>
+			<index column="PHONEM_ORDER"/>
+			<many-to-many class="fr.free.hd.servers.entities.Phonem" column="PHONEM_ID"/>
+		</list>
+  	</class>
 </hibernate-mapping>

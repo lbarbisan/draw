@@ -1,4 +1,4 @@
-package fr.free.hd.servers.gui;
+package fr.free.hd.servers.gui.command;
 
 import java.awt.Color;
 import java.io.File;
@@ -19,6 +19,8 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
+import fr.free.hd.servers.gui.StatementListModel;
+import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
 
 public class PrintCommand extends ActionCommand {
 
@@ -95,7 +97,7 @@ public class PrintCommand extends ActionCommand {
 			innertable.getDefaultCell().setFixedHeight(140);
 			Phonem phonem = (Phonem)model.getElementAt(index);
 			try {
-				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGenerator.Create(phonem, face), Color.WHITE));
+				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGeneratorHelper.Create(phonem, face), Color.WHITE));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

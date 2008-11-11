@@ -1,4 +1,4 @@
-package fr.free.hd.servers.gui;
+package fr.free.hd.servers.gui.tools;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +21,7 @@ import fr.free.hd.servers.LPCDraw;
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 
-public class FaceGenerator {
+public class FaceGeneratorHelper {
 
 	/**
 	 * 

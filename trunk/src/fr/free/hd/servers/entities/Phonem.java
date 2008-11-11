@@ -73,7 +73,7 @@ public class Phonem extends BaseEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Phonem)
+		if(!(obj instanceof Phonem))
 		{
 			return super.equals(obj);
 		}

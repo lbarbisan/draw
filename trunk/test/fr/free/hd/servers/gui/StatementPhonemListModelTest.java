@@ -18,7 +18,7 @@ import fr.free.hd.servers.entities.HandPositionEnum;
 import fr.free.hd.servers.entities.MouthVowelEnum;
 import fr.free.hd.servers.entities.Phonem;
 
-public class PhonemListModelTest {
+public class StatementPhonemListModelTest {
 
 	private StatementListModel model = null;
 	private JTextField field;

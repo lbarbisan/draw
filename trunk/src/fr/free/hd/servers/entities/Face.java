@@ -2,8 +2,8 @@ package fr.free.hd.servers.entities;
 
 /**
  * Represente la configuration d'un visage.
- * Fournit le visage à afficher ainsi que les coordonées de chaque element.
- * Chaque coordonées est configurée en unité de 1 à 1000
+ * Fournit le visage à afficher ainsi que les coordonnées de chaque element.
+ * Chaque coordonnée est configurée en unité de 1 à 1000
  * @author Laurent BARBISAN
  */
 public class Face extends BaseEntity {

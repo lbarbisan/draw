@@ -1,4 +1,4 @@
-package fr.free.hd.servers.gui;
+package fr.free.hd.servers.gui.tools;
 
 import java.awt.Container;
 import java.awt.Dimension;
