@@ -14,7 +14,7 @@
 	<tx:annotation-driven />
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
-		p:password="${jdbc.password}" />
+		p:driverClassName="${test.jdbc.driverClassName}" p:url="${test.jdbc.url}" p:username="${test.jdbc.username}"
+		p:password="${test.jdbc.password}" />
 
 </beans>

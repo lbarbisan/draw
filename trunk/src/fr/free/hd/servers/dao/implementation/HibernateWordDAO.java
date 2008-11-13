@@ -5,11 +5,13 @@ import java.util.Collection;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.free.hd.servers.dao.FaceDAO;
-import fr.free.hd.servers.entities.Face;
+import fr.free.hd.servers.dao.WordDAO;
+import fr.free.hd.servers.entities.Phonem;
+import fr.free.hd.servers.entities.Word;
 
 
 /**
@@ -30,7 +32,7 @@ import fr.free.hd.servers.entities.Face;
  */
 @Repository
 @Transactional
-public class HibernateFaceDAO implements FaceDAO {
+public class HibernateWordDAO implements WordDAO {
 
 	@Autowired
 	@Qualifier("transactionFactory")
@@ -39,24 +41,22 @@ public class HibernateFaceDAO implements FaceDAO {
 
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
-	public Collection<Face> getFaces() {
-		return transactionFactory.getCurrentSession().createQuery("from Face face").list();
+	public Collection<Word> getWords() {
+		return transactionFactory.getCurrentSession().createQuery("from Word word").list();
 	}
 
 	@Transactional(readOnly = true)
-	public Face findFace(String picture) {
-		return (Face)transactionFactory.getCurrentSession().createQuery("from Face face where face.picture like :picture")
-				.setString("picture", picture).uniqueResult();
+	public Word findFace(String word) {
+		return (Word)transactionFactory.getCurrentSession().createQuery("from Word word where word.word like :word")
+				.setString("word", word).uniqueResult();
 	}
 	
-	public void storeFace(Face face) {
-		// Note: Hibernate3's merge operation does not reassociate the object
-		// with the current Hibernate Session. Instead, it will always copy the
-		// state over to a registered representation of the entity. In case of a
-		// new entity, it will register a copy as well, but will not update the
-		// id of the passed-in object. To still update the ids of the original
-		// objects too, we need to register Spring's
-		// IdTransferringMergeEventListener on our SessionFactory.
-		transactionFactory.getCurrentSession().merge(face);
+	@Override
+	public void storeWord(Word word) throws DataAccessException {
+		for(Phonem phonem : word.getPhonems())
+		{
+			transactionFactory.getCurrentSession().merge(phonem);
+		}
+		transactionFactory.getCurrentSession().merge(word);
 	}
 }

@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<bean id="PhonemsDAO" class="fr.free.hd.servers.dao.implementation.HibernatePhonemsDAO" />
+	<bean id="FacesDAO" class="fr.free.hd.servers.dao.implementation.HibernateFaceDAO" />
+	<bean id="WordDAO" class="fr.free.hd.servers.dao.implementation.HibernateWordDAO" />
 
 	<bean id="transactionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
 		p:dataSource-ref="dataSource" p:mappingResources="LPCDraw.hbm.xml">

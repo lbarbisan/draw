@@ -87,53 +87,5 @@ import fr.free.hd.servers.entities.Phonem;
 @ContextConfiguration
 public abstract class AbstractDAOTests extends AbstractTransactionalJUnit4SpringContextTests {
 
-	@Autowired
-	protected PhonemsDAO phonemsDAO;
-
-	@Test
-	public void insertPhonem() {
-		Collection<Phonem> phonems = this.phonemsDAO.findPhonems("ta");
-		int found = phonems.size();
-		Phonem phonem = new Phonem("ta",HandKeyEnum.HAND_KEY_1M, 
-				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A);
-		this.phonemsDAO.storePhonem(phonem);
-		// assertTrue(!owner.isNew()); -- NOT TRUE FOR TOPLINK (before commit)
-		phonems = this.phonemsDAO.findPhonems("ta");
-		assertEquals("Verifying number of owners after inserting a new one.", found + 1, phonems.size());
-	}
-
-	@Test
-	public void getPhonems() {
-		Phonem phonem = new Phonem("TB", HandKeyEnum.HAND_KEY_1M, 
-				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A);
-		this.phonemsDAO.storePhonem(phonem);
-		phonem = new Phonem("TC", HandKeyEnum.HAND_KEY_2M, 
-				HandPositionEnum.HAND_POSITION_BOUCHE, 
-				MouthVowelEnum.MOUTH_VOWEL_A);
-		this.phonemsDAO.storePhonem(phonem);
-		Collection<Phonem> vets = this.phonemsDAO.getPhonems();
-		// Use the inherited countRowsInTable() convenience method (from
-		// AbstractTransactionalJUnit4SpringContextTests) to verify the results.
-		assertEquals("JDBC query must show the same number of vets", super.countRowsInTable("PHONEM"), vets.size());
-		Phonem v1 = phonemsDAO.loadPhonem(2);
-		assertEquals("tb", v1.getPhonem());
-		assertEquals(HandKeyEnum.HAND_KEY_1M, v1.getHandKey());
-		Phonem v2 = phonemsDAO.loadPhonem(3);
-		assertEquals("tc", v2.getPhonem());
-		assertEquals(HandKeyEnum.HAND_KEY_2M, v2.getHandKey());
-	}
 	
-	@Test
-	public void updatePhonem() throws Exception {
-		insertPhonem();
-		Phonem p1 = this.phonemsDAO.loadPhonem(4);
-		int id = p1.getId();
-		String old = p1.getPhonem();
-		p1.setPhonem(old + "x");
-		this.phonemsDAO.storePhonem(p1);
-		p1 = this.phonemsDAO.loadPhonem(id);
-		assertEquals(old + "x", p1.getPhonem());
-	}
 }

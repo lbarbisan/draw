@@ -58,6 +58,10 @@ public class StatementPhonemListModelTest {
 				HandPositionEnum.HAND_POSITION_BOUCHE, 
 				MouthVowelEnum.MOUTH_VOWEL_A);
 		maps.put("UI", phonem);
+		phonem = new Phonem("LUI", HandKeyEnum.HAND_KEY_1M, 
+				HandPositionEnum.HAND_POSITION_BOUCHE, 
+				MouthVowelEnum.MOUTH_VOWEL_A);
+		maps.put("LUI", phonem);
 		
 		model = new StatementListModel(maps);
 	}
@@ -183,6 +187,7 @@ public class StatementPhonemListModelTest {
 	@Test
 	public void testParserGourmand() throws BadLocationException {
 		model.setString("LUI");
-		Assert.assertEquals(2, model.getSize());
+		Assert.assertEquals(1, model.getSize());
+		Assert.assertEquals("LUI", ((Phonem)model.getElementAt(0)).getPhonem());
 	}
 }

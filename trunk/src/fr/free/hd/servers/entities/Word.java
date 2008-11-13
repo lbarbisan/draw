@@ -1,5 +1,6 @@
 package fr.free.hd.servers.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 public class Word extends BaseEntity {
 
 	private String word;
-	private List<Phonem> phonems;
+	private List<Phonem> phonems = new ArrayList<Phonem>();
 	
 	/**
 	 * For ORM Engine purpose, don't use it.

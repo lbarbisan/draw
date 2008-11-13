@@ -19,7 +19,7 @@ public class PhonemListModel extends AbstractListModel {
 	{
 		if(list==null)
 		{
-			throw new NullPointerException("List mist be set");
+			throw new NullPointerException("List must be set");
 		}
 		this.list = list;
 	}
