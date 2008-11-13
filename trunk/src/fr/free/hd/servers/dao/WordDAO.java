@@ -31,7 +31,7 @@ public interface WordDAO {
 	 * @return a <code>Collection</code> of matching <code>Owner</code>s
 	 * (or an empty <code>Collection</code> if none found)
 	 */
-	Word findFace(String word) throws DataAccessException;
+	Word findWord(String word) throws DataAccessException;
 	
 	/**
 	 * Save an <code>Face</code> to the data store, either inserting or updating it.

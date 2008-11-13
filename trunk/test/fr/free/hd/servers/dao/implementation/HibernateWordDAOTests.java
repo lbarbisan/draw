@@ -1,7 +1,5 @@
 package fr.free.hd.servers.dao.implementation;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +18,25 @@ public class HibernateWordDAOTests extends AbstractDAOTests {
 	@Autowired
 	protected WordDAO wordDAO;
 
-	/*@Test
+	@Test
 	public void testGetWords() {
-		fail("Not yet implemented");
+		Word word = new Word();
+		word.setWord("bruit");
+		wordDAO.storeWord(word);
+		word = new Word();
+		word.setWord("bruit2");
+		wordDAO.storeWord(word);
+		Assert.assertEquals(2, super.countRowsInTable("WORD"));
+	
 	}
 
 	@Test
 	public void testFindFace() {
-		fail("Not yet implemented");
-	}*/
+		testStoreWord();
+		Word word = wordDAO.findWord("bruit");
+		Assert.assertNotNull(word);
+		Assert.assertEquals(2, word.getPhonems().size());
+	}
 
 	@Test
 	public void testStoreWord() {

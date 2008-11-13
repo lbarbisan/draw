@@ -2,10 +2,7 @@ package fr.free.hd.servers.gui;
 
 import java.awt.Component;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JList;
 
 import fr.free.hd.servers.entities.Phonem;

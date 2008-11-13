@@ -46,7 +46,7 @@ public class HibernateWordDAO implements WordDAO {
 	}
 
 	@Transactional(readOnly = true)
-	public Word findFace(String word) {
+	public Word findWord(String word) {
 		return (Word)transactionFactory.getCurrentSession().createQuery("from Word word where word.word like :word")
 				.setString("word", word).uniqueResult();
 	}
