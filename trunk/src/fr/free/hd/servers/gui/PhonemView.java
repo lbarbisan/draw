@@ -16,6 +16,11 @@
 package fr.free.hd.servers.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -43,58 +48,66 @@ import fr.free.hd.servers.dao.PhonemsDAO;
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 import fr.free.hd.servers.gui.command.PrintCommand;
+import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
+import fr.free.hd.servers.gui.tools.ImageSelection;
 
 /**
  * Shows the owners and their pets in a tree structure.
- *
- * Several dialogs are used to show detail information or messages. Notice that we're explicitly
- * setting {@link CloseAction}s to either dispose or hide the dialog as an example. Check out the default behavior of
- * the dialog type that you use to determine if you need to specify this as well.
- *
+ * 
+ * Several dialogs are used to show detail information or messages. Notice that
+ * we're explicitly setting {@link CloseAction}s to either dispose or hide the
+ * dialog as an example. Check out the default behavior of the dialog type that
+ * you use to determine if you need to specify this as well.
+ * 
  * @author Keith Donald
  * @author Jan Hoskens
  */
 public class PhonemView extends AbstractView implements ApplicationListener {
 
 	protected PhonemsDAO phonemsDAO;
-	protected FaceDAO facesDao; 
-	
-	protected PrintCommand printCommand = new PrintCommand();
-	
-    public void componentClosed() {}
-    @Override
-    public void componentFocusGained() {}
-    @Override
-    public void componentFocusLost() {}
-    @Override
-    public void componentOpened() {}
-	@Override
-	public void onApplicationEvent(ApplicationEvent event) {}
+	protected FaceDAO facesDao;
 
-	
-	
+	protected PrintCommand printCommand = new PrintCommand();
+
+	public void componentClosed() {
+	}
+
+	@Override
+	public void componentFocusGained() {
+	}
+
+	@Override
+	public void componentFocusLost() {
+	}
+
+	@Override
+	public void componentOpened() {
+	}
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+	}
+
 	@Override
 	protected JComponent createControl() {
 		final JPanel view = new JPanel(new BorderLayout());
-        
+
 		Collection<Phonem> phonesList = phonemsDAO.getPhonems();
 		Map<String, Phonem> mapList = new HashMap<String, Phonem>();
-		for(Phonem phonem : phonesList)
-		{
+		for (Phonem phonem : phonesList) {
 			mapList.put(phonem.getPhonem(), phonem);
 		}
-		
+
 		final StatementListModel model = new StatementListModel(mapList);
-		Face face = facesDao.findFace("Visage.jpg");
-		
+		final Face face = facesDao.findFace("Visage.jpg");
+
 		printCommand.setModel(model);
 		printCommand.setFace(face);
-	
+
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
-		field.getDocument().addDocumentListener(new DocumentListener()
-		{
+		field.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
@@ -108,56 +121,88 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				model.setString(field.getText()); 
+				model.setString(field.getText());
 			}
-			
+
 		});
-		
-		final PhonemListModel phonemModel = new PhonemListModel((List<Phonem>)phonesList);
+
+		final PhonemListModel phonemModel = new PhonemListModel(
+				(List<Phonem>) phonesList);
 		final JList phonemList = new JList(phonemModel);
 		final JScrollPane spPhonemList = new JScrollPane(phonemList);
-		phonemList.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{
-			//private int oldIndex = -1;
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				  if (e.getValueIsAdjusting() == false) {
-					Phonem innerPhonem = (Phonem)phonemModel.getElementAt(phonemList.getSelectedIndex());
-					field.setText(field.getText() + innerPhonem.getPhonem());
-					//model.setString(field.getText());
-					//oldIndex = e.getFirstIndex();
-				
-			  }
-				  }
-		});
+		phonemList.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					// private int oldIndex = -1;
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if (e.getValueIsAdjusting() == false) {
+							Phonem innerPhonem = (Phonem) phonemModel
+									.getElementAt(phonemList.getSelectedIndex());
+							field.setText(field.getText()
+									+ innerPhonem.getPhonem());
+							// model.setString(field.getText());
+							// oldIndex = e.getFirstIndex();
+
+						}
+					}
+				});
 		phonemList.setCellRenderer(new PhonemListRenderer());
 		list.setCellRenderer(new StatementPhonemListRenderer(face));
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(1);
+		list.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					// private int oldIndex = -1;
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+
+						if (e.getValueIsAdjusting() == false) {
+							Object[] phonems = list.getSelectedValues();
+							int size = phonems.length* FaceGeneratorHelper.initialWidthSize;
+							BufferedImage finalImage = null;
+							Graphics2D g2 = null;
+					    	for (int i = 0; i < phonems.length; i++) {
+								Phonem phonem = (Phonem)phonems[i];
+								Image image = FaceGeneratorHelper.Create(phonem, face);
+								if(finalImage==null)
+								{
+									finalImage = new BufferedImage(size, image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+									g2 = (Graphics2D)finalImage.createGraphics();
+								}
+								g2.drawImage(image, i*FaceGeneratorHelper.initialWidthSize, 0, null);
+							}
+							Toolkit toolkit = Toolkit.getDefaultToolkit();
+							Clipboard clipboard = toolkit.getSystemClipboard();
+							clipboard.setContents(new ImageSelection(finalImage), null);
+						}
+					}
+				});
 
 		view.add(spPhonemList, BorderLayout.WEST);
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
-        		
-        return view;
+
+		return view;
 	}
+
 	@Override
 	protected void registerLocalCommandExecutors(PageComponentContext context) {
-		context.register("PrintCommand" , printCommand);
+		context.register("PrintCommand", printCommand);
 	}
-	
-	
+
 	public PhonemsDAO getPhonemsDAO() {
 		return phonemsDAO;
 	}
+
 	public void setPhonemsDAO(PhonemsDAO phonemsDAO) {
 		this.phonemsDAO = phonemsDAO;
 	}
-	
+
 	public FaceDAO getFacesDAO() {
 		return facesDao;
 	}
+
 	public void setFacesDAO(FaceDAO facesDao) {
 		this.facesDao = facesDao;
 	}

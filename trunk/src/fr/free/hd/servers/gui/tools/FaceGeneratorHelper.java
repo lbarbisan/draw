@@ -31,7 +31,7 @@ public class FaceGeneratorHelper {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	private static int initialHeightSize = 200;
+	public static int initialWidthSize = 200;
 		
 	private static Dimension dimension  = null;
 	
@@ -41,10 +41,11 @@ public class FaceGeneratorHelper {
     	{
 	    	//Get Face
 	    	Image faceImage = getFace();
+	    	faceImage = makeColorTransparent(faceImage, Color.GREEN);
 	    	
 	    	//Create final image
-	    	int width = initialHeightSize* faceImage.getWidth(null) / faceImage.getHeight(null);
-	    	dimension = new Dimension(width, initialHeightSize);
+	    	int height = initialWidthSize* faceImage.getHeight(null) / faceImage.getWidth(null);
+	    	dimension = new Dimension(initialWidthSize,height );
     		BufferedImage finalImage = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
 	    	Graphics2D g2 = (Graphics2D)finalImage.createGraphics();
 	    	
@@ -61,7 +62,7 @@ public class FaceGeneratorHelper {
     
     private static void drawHand(Graphics2D g, Phonem phonem, Face face)
     {
-    	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".JPG";
+    	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".png";
     	Image hand = null;
     	if(!cachedImage.containsKey(handImagePath))
     	{
@@ -69,6 +70,7 @@ public class FaceGeneratorHelper {
 				hand = ImageIO.read(LPCDraw.class.getResource(handImagePath));
 				int width = face.getHandRatio()*dimension.width/1000;
     			int height = width * hand.getHeight(null)/ hand.getWidth(null);
+    			hand = makeColorTransparent(hand, Color.GREEN);
     			hand = getScaledImage(hand, width, height);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -147,7 +149,7 @@ public class FaceGeneratorHelper {
     
     private static Image getFace()
     {
-    	String faceImagePath = "visage.jpg";
+    	String faceImagePath = "visage.png";
     	Image face = null;
     	if(!cachedImage.containsKey(faceImagePath))
     	{

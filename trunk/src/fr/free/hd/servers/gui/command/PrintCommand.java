@@ -1,6 +1,8 @@
 package fr.free.hd.servers.gui.command;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
