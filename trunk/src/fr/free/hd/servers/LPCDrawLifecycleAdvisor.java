@@ -44,7 +44,7 @@ public class LPCDrawLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor
     {
         super.onPreWindowOpen(configurer);
         // comment out to hide the menubar, toolbar, or reduce window size...
-        configurer.setShowMenuBar(false);
+        configurer.setShowMenuBar(true);
         configurer.setShowToolBar(true);
         configurer.setInitialSize(new Dimension(800, 400));
     }
