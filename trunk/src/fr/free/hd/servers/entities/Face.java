@@ -10,17 +10,21 @@ public class Face extends BaseEntity {
 
 	private String picture = "Visage.jpg";
 	private int mouthRatio = 200;
-	private int handRatio = 300;
 	private int mouthYPercent = 680;
 	private int mouthXPercent = 485;
+	private int boucheRatio = 300;
 	private int boucheX = 400;
 	private int boucheY = 600;
+	private int coteRatio = 300;
 	private int coteX = 0;
 	private int coteY = 400;
+	private int couRatio = 300;
 	private int couX = 400;
 	private int couY = 800;
+	private int mentonRatio = 300;
 	private int mentonX = 500;
 	private int mentonY = 700;
+	private int paumetteRatio = 300;
 	private int paumetteX = 300;
 	private int paumetteY = 500;
 	
@@ -36,11 +40,35 @@ public class Face extends BaseEntity {
 	public void setMouthRatio(int mouthRatio) {
 		this.mouthRatio = mouthRatio;
 	}
-	public int getHandRatio() {
-		return handRatio;
+	public int getBoucheRatio() {
+		return boucheRatio;
 	}
-	public void setHandRatio(int handRatio) {
-		this.handRatio = handRatio;
+	public int getCoteRatio() {
+		return coteRatio;
+	}
+	public void setCoteRatio(int coteRatio) {
+		this.coteRatio = coteRatio;
+	}
+	public int getCouRatio() {
+		return couRatio;
+	}
+	public void setCouRatio(int couRatio) {
+		this.couRatio = couRatio;
+	}
+	public int getMentonRatio() {
+		return mentonRatio;
+	}
+	public void setMentonRatio(int mentonRatio) {
+		this.mentonRatio = mentonRatio;
+	}
+	public int getPaumetteRatio() {
+		return paumetteRatio;
+	}
+	public void setPaumetteRatio(int paumetteRatio) {
+		this.paumetteRatio = paumetteRatio;
+	}
+	public void setBoucheRatio(int boucheRatio) {
+		this.boucheRatio = boucheRatio;
 	}
 	public int getMouthYPercent() {
 		return mouthYPercent;

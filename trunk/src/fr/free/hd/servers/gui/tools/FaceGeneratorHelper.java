@@ -35,6 +35,12 @@ public class FaceGeneratorHelper {
 		
 	private static Dimension dimension  = null;
 	
+	public static void ClearCache()
+	{
+		cachedFinalImage.clear();
+		cachedImage.clear();
+	}
+	
     public static Image Create(Phonem phonem, Face face) {
     	
     	if(!cachedFinalImage.containsKey(phonem))
@@ -62,31 +68,74 @@ public class FaceGeneratorHelper {
     
     private static void drawHand(Graphics2D g, Phonem phonem, Face face)
     {
-    	String handImagePath = "hand\\" + phonem.getHandKey().toString() + ".png";
-    	Image hand = null;
-    	if(!cachedImage.containsKey(handImagePath))
+    	//Hand picture selectionne
+    	String handImagePath = null;
+    	switch(phonem.getHandPosition())
+    	{
+    	case HAND_POSITION_BOUCHE:
+    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";	
+    		break;
+    	case HAND_POSITION_COTE:
+    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_V" + ".png";
+    		break;
+    	case HAND_POSITION_COU:
+    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		break;
+    	case HAND_POSITION_MENTON:
+    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		break;
+    	case HAND_POSITION_PAUMETTE:
+    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		break;
+    	}
+
+    	
+    	//Hand picture loading
+    	Image hand = null;    	
+		if(!cachedImage.containsKey(handImagePath))
     	{
     		try {
 				hand = ImageIO.read(LPCDraw.class.getResource(handImagePath));
-				int width = face.getHandRatio()*dimension.width/1000;
-    			int height = width * hand.getHeight(null)/ hand.getWidth(null);
-    			hand = makeColorTransparent(hand, Color.GREEN);
-    			hand = getScaledImage(hand, width, height);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
             hand = makeColorTransparent(hand, Color.GREEN);
             cachedImage.put(handImagePath, hand);
-       	 	
     	}
     	else
     	{
     		hand = cachedImage.get(handImagePath);
     	}
-    	     	
- 		
+		
+		
+		// Rescaling
+		int width = 0;
+		int height = 0;
+		switch(phonem.getHandPosition())
+    	{
+    	case HAND_POSITION_BOUCHE:
+    		height = face.getBoucheRatio()*dimension.height/1000;
+    		break;
+    	case HAND_POSITION_COTE:
+    		height = face.getCoteRatio()*dimension.height/1000;
+    		break;
+    	case HAND_POSITION_COU:
+    		height = face.getCouRatio()*dimension.height/1000;
+    		break;
+    	case HAND_POSITION_MENTON:
+    		height = face.getMentonRatio()*dimension.height/1000;
+    		break;
+    	case HAND_POSITION_PAUMETTE:
+    		height = face.getPaumetteRatio()*dimension.height/1000;
+    		break;
+    	}
+		
+		width = height * hand.getWidth(null)/ hand.getHeight(null);
+		hand = getScaledImage(hand, width, height);
+		
+		
+		//Translate
     	switch(phonem.getHandPosition())
     	{
     	case HAND_POSITION_BOUCHE:
@@ -114,6 +163,7 @@ public class FaceGeneratorHelper {
     		g.rotate(Math.toRadians(60));
     		break;
     	}
+    	
         g.drawImage(hand, 0, 0, null);
     }
     
@@ -200,7 +250,10 @@ public class FaceGeneratorHelper {
     private static Image getScaledImage(Image srcImg, int w, int h){
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR );
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.drawImage(srcImg, 0, 0, w, h, null);
         g2.dispose();
         return resizedImg;

@@ -30,16 +30,20 @@
 		</id>
 		<property name="picture"/>
 		<property name="mouthRatio"/>
-		<property name="handRatio"/>
 		<property name="mouthYPercent"/>
 		<property name="mouthXPercent"/>
+		<property name="boucheRatio"/>
 		<property name="boucheY"/>
 		<property name="coteX"/>
+		<property name="coteRatio"/>
 		<property name="coteY"/>
+		<property name="couRatio"/>
 		<property name="couX"/>
 		<property name="couY"/>
+		<property name="mentonRatio"/>
 		<property name="mentonX"/>
 		<property name="mentonY"/>
+		<property name="paumetteRatio"/>
 		<property name="paumetteX"/>
 		<property name="paumetteY"/>		
   	</class>

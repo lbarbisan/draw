@@ -224,6 +224,11 @@
   <bean id="FaceView"
     class="org.springframework.richclient.application.support.DefaultViewDescriptor">
     <property name="viewClass" value="fr.free.hd.servers.gui.FaceView" />
+    <property name="viewProperties">
+      <map>
+        <entry key="facesDAO" value-ref="FaceDAO" />
+      </map>
+    </property>
   </bean>
 <!--
   <bean id="vetManagerView"
