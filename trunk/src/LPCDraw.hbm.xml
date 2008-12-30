@@ -33,6 +33,7 @@
 		<property name="mouthYPercent"/>
 		<property name="mouthXPercent"/>
 		<property name="boucheRatio"/>
+		<property name="boucheX"/>
 		<property name="boucheY"/>
 		<property name="coteX"/>
 		<property name="coteRatio"/>

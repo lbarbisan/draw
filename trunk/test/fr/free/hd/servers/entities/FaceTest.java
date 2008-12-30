@@ -18,9 +18,9 @@ public class FaceTest {
 		face.setId(8);
 		face.setMentonX(9);
 		face.setMentonY(10);
-		face.setMouthRatio(11);
-		face.setMouthXPercent(12);
-		face.setMouthYPercent(13);
+		face.setBoucheRatio(11);
+		face.setBoucheX(12);
+		face.setBoucheY(13);
 		face.setPaumetteX(14);
 		face.setPaumetteY(15);
 		face.setPicture("Test");
@@ -35,9 +35,9 @@ public class FaceTest {
 		Assert.assertEquals((Integer)8, face.getId());
 		Assert.assertEquals(9, face.getMentonX());
 		Assert.assertEquals(10, face.getMentonY());
-		Assert.assertEquals(11, face.getMouthRatio());
-		Assert.assertEquals(12, face.getMouthXPercent());
-		Assert.assertEquals(13, face.getMouthYPercent());
+		Assert.assertEquals(11, face.getBoucheRatio());
+		Assert.assertEquals(12, face.getBoucheX());
+		Assert.assertEquals(13, face.getBoucheY());
 		Assert.assertEquals(14, face.getPaumetteX());
 		Assert.assertEquals(15, face.getPaumetteY());
 		Assert.assertEquals("Test", face.getPicture());

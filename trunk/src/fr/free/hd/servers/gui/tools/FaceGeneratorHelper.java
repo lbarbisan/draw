@@ -2,7 +2,6 @@ package fr.free.hd.servers.gui.tools;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -34,7 +33,7 @@ public class FaceGeneratorHelper {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	public static int initialWidthSize = 200;
+	public static int initialWidthSize = 400;
 		
 	private static Dimension dimension  = null;
 	
@@ -320,7 +319,7 @@ public class FaceGeneratorHelper {
         Graphics2D g2 = resizedImg.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR );
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+        //g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.drawImage(srcImg, 0, 0, w, h, null);
         if(phonem!=null)
@@ -373,8 +372,8 @@ public class FaceGeneratorHelper {
     
     private static void drawLines(Graphics2D g, int anchorX, int anchorY, Color color)
     {
-    	g.setColor(color);
+    	/*g.setColor(color);
     	g.drawLine(anchorX , anchorY-10, anchorX, anchorY+ 10);
-        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);
+        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);*/
     }
 }

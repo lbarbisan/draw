@@ -158,7 +158,16 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		c.gridy = 1;
 		c.weightx = 0.15;
 		c.fill = GridBagConstraints.BOTH;
-		JPanel pnlMouth = createKind();
+		JPanel pnlKind = createKind();
+		view.add(pnlKind, c);
+		
+		//Mouth Panel
+		c = new GridBagConstraints();
+		c.gridx = 2;
+		c.gridy = 2;
+		c.weightx = 0.15;
+		c.fill = GridBagConstraints.BOTH;
+		JPanel pnlMouth = createMouth();
 		view.add(pnlMouth, c);
 		
 		// Picture filename
@@ -214,7 +223,7 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		final JSlider slider =  new JSlider();
 		final JSlider sliderX =  new JSlider();
 		final JSlider sliderY =  new JSlider();
-		slider.setMinimum(-1000);
+		slider.setMinimum(0);
 		slider.setMaximum(1000);
 		sliderX.setMinimum(-1000);
 		sliderX.setMaximum(1000);
@@ -413,6 +422,60 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		});
 		panel.add(sliderX);
 		panel.add(sliderY);
+		return panel;	
+	}
+	
+	private JPanel createMouth()
+	{
+		JPanel panel = new JPanel(new GridLayout(3,0));
+		final JSlider slider =  new JSlider();
+		final JSlider sliderX =  new JSlider();
+		final JSlider sliderY =  new JSlider();
+		slider.setMinimum(0);
+		slider.setMaximum(1000);
+		slider.setMajorTickSpacing(100);
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		slider.setPaintTrack(true);
+		sliderX.setMinimum(-1000);
+		sliderX.setMaximum(1000);
+		sliderX.setMajorTickSpacing(100);
+		sliderX.setPaintLabels(true);
+		sliderX.setPaintTicks(true);
+		sliderX.setPaintTrack(true);
+		sliderY.setMinimum(-1000);
+		sliderY.setMaximum(1000);
+		sliderY.setMajorTickSpacing(100);
+		sliderY.setPaintLabels(true);
+		sliderY.setPaintTicks(true);
+		sliderY.setPaintTrack(true);
+		
+		sliderX.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				face.setMouthXPercent(sliderX.getValue());
+				updateLabel();
+			}
+		});
+		sliderY.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				face.setMouthYPercent(sliderY.getValue());
+				updateLabel();
+			}
+		});
+		slider.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				face.setMouthRatio(slider.getValue());
+				updateLabel();
+			}
+		});
+		
+		panel.add(slider);
+		panel.add(sliderX);
+		panel.add(sliderY);
+		
 		return panel;	
 	}
 	
