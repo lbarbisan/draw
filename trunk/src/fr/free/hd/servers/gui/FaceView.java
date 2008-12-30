@@ -34,6 +34,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -41,8 +42,11 @@ import javax.swing.event.ListSelectionListener;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.richclient.application.Application;
+import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.CloseAction;
+import org.springframework.richclient.progress.ProgressMonitor;
 
 import fr.free.hd.servers.dao.FaceDAO;
 import fr.free.hd.servers.entities.Face;
@@ -68,6 +72,7 @@ public class FaceView extends AbstractView implements ApplicationListener {
 	private FaceDAO facesDAO;
 	private Face face;
 	private HandPositionEnum position;
+	private HandKeyEnum kind;
 	private JLabel lblFace;
 	
 	public void componentClosed() {
@@ -153,7 +158,7 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		c.gridy = 1;
 		c.weightx = 0.15;
 		c.fill = GridBagConstraints.BOTH;
-		JPanel pnlMouth = new JPanel(); // createKind();
+		JPanel pnlMouth = createKind();
 		view.add(pnlMouth, c);
 		
 		// Picture filename
@@ -209,12 +214,20 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		final JSlider slider =  new JSlider();
 		final JSlider sliderX =  new JSlider();
 		final JSlider sliderY =  new JSlider();
-		slider.setMinimum(0);
+		slider.setMinimum(-1000);
 		slider.setMaximum(1000);
-		sliderX.setMinimum(0);
+		sliderX.setMinimum(-1000);
 		sliderX.setMaximum(1000);
-		sliderY.setMinimum(0);
+		sliderX.setMajorTickSpacing(100);
+		sliderX.setPaintLabels(true);
+		sliderX.setPaintTicks(true);
+		sliderX.setPaintTrack(true);
+		sliderY.setMinimum(-1000);
 		sliderY.setMaximum(1000);
+		sliderY.setMajorTickSpacing(100);
+		sliderY.setPaintLabels(true);
+		sliderY.setPaintTicks(true);
+		sliderY.setPaintTrack(true);
 		
 		final JComboBox box = new JComboBox(HandPositionEnum.values());
 		box.addItemListener(new ItemListener(){
@@ -304,15 +317,133 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		return panel;
 	}
 	
+	private JPanel createKind()
+	{
+		JPanel panel = new JPanel(new GridLayout(3,0));
+		final JSlider sliderX =  new JSlider();
+		final JSlider sliderY =  new JSlider();
+		final JComboBox box = new JComboBox(HandKeyEnum.values());
+		sliderX.setMinimum(-1000);
+		sliderX.setMaximum(1000);
+		sliderX.setMajorTickSpacing(100);
+		sliderX.setPaintLabels(true);
+		sliderX.setPaintTicks(true);
+		sliderX.setPaintTrack(true);
+		sliderY.setMinimum(-1000);
+		sliderY.setMaximum(1000);
+		sliderY.setMajorTickSpacing(100);
+		sliderY.setPaintLabels(true);
+		sliderY.setPaintTicks(true);
+		sliderY.setPaintTrack(true);
+		
+		box.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				kind = (HandKeyEnum) e.getItem();
+				updateLabel();
+			}});
+		panel.add(box);
+		
+		
+		sliderX.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				switch(kind)
+				{
+				case HAND_KEY_2D:
+					face.setAnchorX_2D(sliderX.getValue());
+					break;
+				case HAND_KEY_2M:
+					face.setAnchorX_2M(sliderX.getValue());
+					break;
+				case HAND_KEY_1M:
+					face.setAnchorX_1M(sliderX.getValue());
+					break;
+				case HAND_KEY_2V:
+					face.setAnchorX_2V(sliderX.getValue());
+					break;
+				case HAND_KEY_3D:
+					face.setAnchorX_3D(sliderX.getValue());
+					break;
+				case HAND_KEY_3G:
+					face.setAnchorX_3G(sliderX.getValue());
+					break;
+				case HAND_KEY_4G:
+					face.setAnchorX_4G(sliderX.getValue());
+					break;
+				case HAND_KEY_5M:
+					face.setAnchorX_5M(sliderX.getValue());
+					break;
+				}
+				updateLabel();
+			}
+		});
+		sliderY.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				switch(kind)
+				{
+				case HAND_KEY_2D:
+					face.setAnchorY_2D(sliderY.getValue());
+					break;
+				case HAND_KEY_2M:
+					face.setAnchorY_2M(sliderY.getValue());
+					break;
+				case HAND_KEY_1M:
+					face.setAnchorY_1M(sliderY.getValue());
+					break;
+				case HAND_KEY_2V:
+					face.setAnchorY_2V(sliderY.getValue());
+					break;
+				case HAND_KEY_3D:
+					face.setAnchorY_3D(sliderY.getValue());
+					break;
+				case HAND_KEY_3G:
+					face.setAnchorY_3G(sliderY.getValue());
+					break;
+				case HAND_KEY_4G:
+					face.setAnchorY_4G(sliderY.getValue());
+					break;
+				case HAND_KEY_5M:
+					face.setAnchorY_5M(sliderY.getValue());
+					break;
+				}
+				updateLabel();
+			}
+		});
+		panel.add(sliderX);
+		panel.add(sliderY);
+		return panel;	
+	}
+	
 	private void updateLabel()
 	{
-		if(position!=null)
-		{
-		Phonem phonem = new Phonem("Demo", HandKeyEnum.HAND_KEY_2M, position, MouthVowelEnum.MOUTH_VOWEL_A);
-		FaceGeneratorHelper.initialWidthSize = 400;
-		FaceGeneratorHelper.ClearCache();
-		Image image = FaceGeneratorHelper.Create(phonem, face);
-		lblFace.setIcon(new ImageIcon(image));
-		}
+		ApplicationWindow aw = Application.instance().getActiveWindow();  
+		final ProgressMonitor pm = aw.getStatusBar().getProgressMonitor();  
+		pm.taskStarted("Rendering picture", -1);  
+		SwingWorker sw = new SwingWorker() {  
+		            //protected Object construct() in SpringRC's SwingWorker!  
+		            protected Object doInBackground() {  
+		                // now my long task and the progress indication  
+		            	if(position!=null)
+		    			{
+			    			Phonem phonem = new Phonem("Demo", kind , position, MouthVowelEnum.MOUTH_VOWEL_A);
+			    			FaceGeneratorHelper.initialWidthSize = 400;
+			    			FaceGeneratorHelper.ClearCache();
+			    			Image image = FaceGeneratorHelper.Create(phonem, face, pm);
+			    			lblFace.setIcon(new ImageIcon(image));
+		    			} 
+		            	return null;
+		           }  
+		           //protected void finished()  
+		           @Override  
+		           protected void done() {  
+		               // all of the following code will be called on the Event Dispatching Thread  
+		               pm.done();  
+		           }  
+		       };  
+		       //sw.start();  
+		       //sw.clear(); // reuse would be possible with SpringRC's SwingWorker!  
+		       sw.execute();
 	}
 }

@@ -36,7 +36,7 @@ public class StatementPhonemListRenderer extends DefaultListCellRenderer {
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.setText(phonem.getPhonem());
-		this.setIcon(new ImageIcon(FaceGeneratorHelper.Create(phonem, face)));
+		this.setIcon(new ImageIcon(FaceGeneratorHelper.Create(phonem, face, null)));
 		
 		return this;
 	}

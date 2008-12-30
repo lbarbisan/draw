@@ -45,7 +45,23 @@
 		<property name="mentonY"/>
 		<property name="paumetteRatio"/>
 		<property name="paumetteX"/>
-		<property name="paumetteY"/>		
+		<property name="paumetteY"/>
+		<property name="anchorX_2V"/>
+		<property name="anchorY_2V"/>
+		<property name="anchorX_3D"/>
+		<property name="anchorY_3D"/>
+		<property name="anchorX_1M"/>
+		<property name="anchorY_1M"/>
+		<property name="anchorX_2M"/>
+		<property name="anchorY_2M"/>
+		<property name="anchorX_4G"/>
+		<property name="anchorY_4G"/>
+		<property name="anchorX_5M"/>
+		<property name="anchorY_5M"/>
+		<property name="anchorX_3G"/>
+		<property name="anchorY_3G"/>
+		<property name="anchorX_2D"/>
+		<property name="anchorY_2D"/>
   	</class>
   	<class name="fr.free.hd.servers.entities.Word" table="Word">
 		<id name="id" column="id">

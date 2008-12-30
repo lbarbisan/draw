@@ -1,8 +1,6 @@
 package fr.free.hd.servers.gui.command;
 
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -99,7 +97,7 @@ public class PrintCommand extends ActionCommand {
 			innertable.getDefaultCell().setFixedHeight(140);
 			Phonem phonem = (Phonem)model.getElementAt(index);
 			try {
-				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGeneratorHelper.Create(phonem, face), Color.WHITE));
+				innertable.addCell(com.lowagie.text.Image.getInstance( FaceGeneratorHelper.Create(phonem, face, null), Color.WHITE));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

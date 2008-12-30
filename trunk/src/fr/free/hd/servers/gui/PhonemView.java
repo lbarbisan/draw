@@ -164,7 +164,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 							Graphics2D g2 = null;
 					    	for (int i = 0; i < phonems.length; i++) {
 								Phonem phonem = (Phonem)phonems[i];
-								Image image = FaceGeneratorHelper.Create(phonem, face);
+								Image image = FaceGeneratorHelper.Create(phonem, face, null);
 								if(finalImage==null)
 								{
 									finalImage = new BufferedImage(size, image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -206,5 +206,4 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	public void setFacesDAO(FaceDAO facesDao) {
 		this.facesDao = facesDao;
 	}
-
 }
