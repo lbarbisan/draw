@@ -206,7 +206,7 @@ public class FaceGeneratorHelper {
     		//Initial Move
     		g.translate(dimension.width*face.getBoucheX() /1000-dimension.width*anchorX/1000,
     					dimension.height*face.getBoucheY() /1000-dimension.height*anchorY/1000);
-    		g.rotate(Math.toRadians(90), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+    		g.rotate(Math.toRadians(45), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	case HAND_POSITION_COTE:
     		g.translate(dimension.width*face.getCoteX() /1000-dimension.width*anchorX/1000,
@@ -372,8 +372,8 @@ public class FaceGeneratorHelper {
     
     private static void drawLines(Graphics2D g, int anchorX, int anchorY, Color color)
     {
-    	/*g.setColor(color);
+    	g.setColor(color);
     	g.drawLine(anchorX , anchorY-10, anchorX, anchorY+ 10);
-        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);*/
+        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);
     }
 }
