@@ -372,8 +372,8 @@ public class FaceGeneratorHelper {
     
     private static void drawLines(Graphics2D g, int anchorX, int anchorY, Color color)
     {
-    	g.setColor(color);
+    	/*g.setColor(color);
     	g.drawLine(anchorX , anchorY-10, anchorX, anchorY+ 10);
-        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);
+        g.drawLine(anchorX-10, anchorY, anchorX+10, anchorY);*/
     }
 }

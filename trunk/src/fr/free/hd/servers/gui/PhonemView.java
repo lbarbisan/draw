@@ -41,12 +41,14 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
+import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.richclient.dialog.CloseAction;
 
 import fr.free.hd.servers.dao.FaceDAO;
 import fr.free.hd.servers.dao.PhonemsDAO;
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
+import fr.free.hd.servers.gui.command.CopyCommandPhonem;
 import fr.free.hd.servers.gui.command.PrintCommand;
 import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
 import fr.free.hd.servers.gui.tools.ImageSelection;
@@ -68,6 +70,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	protected FaceDAO facesDao;
 
 	protected PrintCommand printCommand = new PrintCommand();
+	protected CopyCommandPhonem copyCommand = new CopyCommandPhonem();
 
 	public void componentClosed() {
 	}
@@ -103,6 +106,8 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 		printCommand.setModel(model);
 		printCommand.setFace(face);
+		copyCommand.setModel(model);
+		copyCommand.setFace(face);
 
 		final JList list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
@@ -151,34 +156,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(1);
-		list.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-					// private int oldIndex = -1;
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-
-						if (e.getValueIsAdjusting() == false) {
-							Object[] phonems = list.getSelectedValues();
-							int size = phonems.length* FaceGeneratorHelper.initialWidthSize;
-							BufferedImage finalImage = null;
-							Graphics2D g2 = null;
-					    	for (int i = 0; i < phonems.length; i++) {
-								Phonem phonem = (Phonem)phonems[i];
-								Image image = FaceGeneratorHelper.Create(phonem, face, null);
-								if(finalImage==null)
-								{
-									finalImage = new BufferedImage(size, image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-									g2 = (Graphics2D)finalImage.createGraphics();
-								}
-								g2.drawImage(image, i*FaceGeneratorHelper.initialWidthSize, 0, null);
-							}
-							Toolkit toolkit = Toolkit.getDefaultToolkit();
-							Clipboard clipboard = toolkit.getSystemClipboard();
-							clipboard.setContents(new ImageSelection(finalImage), null);
-						}
-					}
-				});
-
+		
 		view.add(spPhonemList, BorderLayout.WEST);
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
@@ -189,6 +167,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	@Override
 	protected void registerLocalCommandExecutors(PageComponentContext context) {
 		context.register("PrintCommand", printCommand);
+		context.register(GlobalCommandIds.COPY, copyCommand);
 	}
 
 	public PhonemsDAO getPhonemsDAO() {
