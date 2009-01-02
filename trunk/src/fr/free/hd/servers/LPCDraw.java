@@ -31,7 +31,7 @@ public class LPCDraw {
         String richclientApplicationContextPath = rootContextDirectoryClassPath
                 + "LPCDraw-application-context.xml";
 
-        String businessLayerContextPath = rootContextDirectoryClassPath + "/LPCDraw-business-context.xml";
+        String businessLayerContextPath = rootContextDirectoryClassPath + "LPCDraw-business-context.xml";
 
         //String securityContextPath = rootContextDirectoryClassPath + "/standalone/security-context.xml";
 

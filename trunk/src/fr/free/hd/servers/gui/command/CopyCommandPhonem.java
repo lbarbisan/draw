@@ -37,7 +37,7 @@ public class CopyCommandPhonem extends ActionCommand {
 		            protected Object doInBackground() {
 		            	int total = 0;
 		            	int size = model.getSize()* FaceGeneratorHelper.initialWidthSize;
-		            	int diff = 100/size;
+		            	int diff = 90/model.getSize();
 		        		BufferedImage finalImage = null;
 		        		Graphics2D g2 = null;
 		        		
@@ -58,6 +58,8 @@ public class CopyCommandPhonem extends ActionCommand {
 		        		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		        		Clipboard clipboard = toolkit.getSystemClipboard();
 		        		clipboard.setContents(new ImageSelection(finalImage), null);
+		        		
+		        		pm.worked(100);
 		        		
 		            	return null;
 		           }  

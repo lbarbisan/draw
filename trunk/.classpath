@@ -17,9 +17,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/spring"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-sandbox"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/spring-richclient-support"/>
-	<classpathentry kind="lib" path="lib/jasperreports-3.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/iText-2.1.3.jar"/>
-	<classpathentry kind="lib" path="lib/acrobat.jar"/>
 	<classpathentry kind="lib" path="lib/MRJToolkitStubs"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

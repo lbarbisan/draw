@@ -33,7 +33,7 @@ public class FaceGeneratorHelper {
 	private static Map<String, Image> cachedImage = new HashMap<String, Image>();
 	private static Map<Phonem, Image> cachedFinalImage = new HashMap<Phonem, Image>();
 	
-	public static int initialWidthSize = 400;
+	public static int initialWidthSize = 250;
 		
 	private static Dimension dimension  = null;
 	
@@ -101,19 +101,19 @@ public class FaceGeneratorHelper {
     	switch(phonem.getHandPosition())
     	{
     	case HAND_POSITION_BOUCHE:
-    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";	
+    		handImagePath = "hand/" + phonem.getHandKey().toString().toUpperCase() + "_D" + ".png";	
     		break;
     	case HAND_POSITION_COTE:
-    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_V" + ".png";
+    		handImagePath = "hand/" + phonem.getHandKey().toString().toUpperCase() + "_V" + ".png";
     		break;
     	case HAND_POSITION_COU:
-    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		handImagePath = "hand/" + phonem.getHandKey().toString().toUpperCase() + "_D" + ".png";
     		break;
     	case HAND_POSITION_MENTON:
-    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		handImagePath = "hand/" + phonem.getHandKey().toString().toUpperCase() + "_D" + ".png";
     		break;
     	case HAND_POSITION_PAUMETTE:
-    		handImagePath = "hand\\" + phonem.getHandKey().toString() + "_D" + ".png";
+    		handImagePath = "hand/" + phonem.getHandKey().toString().toUpperCase() + "_D" + ".png";
     		break;
     	}
     	
@@ -235,7 +235,7 @@ public class FaceGeneratorHelper {
     
     private static void drawMouth(Graphics2D g, Phonem phonem, Face face)
     {
-    	String mouthImagePath = "mouth/" + phonem.getMouthVowel().toString() + ".png";
+    	String mouthImagePath = "mouth/" + phonem.getMouthVowel().toString().toUpperCase() + ".png";
     	Image mouth = null;
     	if(!cachedImage.containsKey(mouthImagePath))
     	{
@@ -265,11 +265,12 @@ public class FaceGeneratorHelper {
     
     private static Image getFace()
     {
-    	String faceImagePath = "visage.png";
+    	String faceImagePath = "Visage.png";
     	Image face = null;
     	if(!cachedImage.containsKey(faceImagePath))
     	{
     		try {
+    			System.out.println(LPCDraw.class.getResource(faceImagePath));
     			face = ImageIO.read(LPCDraw.class.getResource(faceImagePath));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
