@@ -16,11 +16,6 @@
 package fr.free.hd.servers.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +45,6 @@ import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 import fr.free.hd.servers.gui.command.CopyCommandPhonem;
 import fr.free.hd.servers.gui.command.PrintCommand;
-import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
-import fr.free.hd.servers.gui.tools.ImageSelection;
 
 /**
  * Shows the owners and their pets in a tree structure.
@@ -131,8 +124,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 		});
 
-		final PhonemListModel phonemModel = new PhonemListModel(
-				(List<Phonem>) phonesList);
+		final PhonemListModel phonemModel = new PhonemListModel((List<Phonem>) phonesList);
 		final JList phonemList = new JList(phonemModel);
 		final JScrollPane spPhonemList = new JScrollPane(phonemList);
 		phonemList.getSelectionModel().addListSelectionListener(
@@ -161,6 +153,8 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		view.add(sp, BorderLayout.CENTER);
 		view.add(field, BorderLayout.SOUTH);
 
+		field.requestFocus();
+		
 		return view;
 	}
 
