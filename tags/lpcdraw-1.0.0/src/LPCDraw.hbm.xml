@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+  - Mapping file for the Hibernate implementation of the Clinic interface.
+	-->
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<typedef name="handKey" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.HandKeyEnum</param>
+  	</typedef>
+  	<typedef name="handPosition" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.HandPositionEnum</param>
+  	</typedef>
+  	<typedef name="mouthVowel" class="fr.free.hd.servers.dao.EnumUserType">
+		<param name="enumClassName">fr.free.hd.servers.entities.MouthVowelEnum</param>
+  	</typedef>
+	<class name="fr.free.hd.servers.entities.Phonem" table="Phonem">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="phonem" column="phonem"/>
+		<property name="handKey" type="handKey"/>
+		<property name="handPosition" type="handPosition"/>
+		<property name="mouthVowel" type="mouthVowel"/>
+  	</class>
+  	<class name="fr.free.hd.servers.entities.Face" table="Face">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="picture"/>
+		<property name="mouthRatio"/>
+		<property name="mouthYPercent"/>
+		<property name="mouthXPercent"/>
+		<property name="boucheRatio"/>
+		<property name="boucheX"/>
+		<property name="boucheY"/>
+		<property name="coteX"/>
+		<property name="coteRatio"/>
+		<property name="coteY"/>
+		<property name="couRatio"/>
+		<property name="couX"/>
+		<property name="couY"/>
+		<property name="mentonRatio"/>
+		<property name="mentonX"/>
+		<property name="mentonY"/>
+		<property name="paumetteRatio"/>
+		<property name="paumetteX"/>
+		<property name="paumetteY"/>
+		<property name="anchorX_2V"/>
+		<property name="anchorY_2V"/>
+		<property name="anchorX_3D"/>
+		<property name="anchorY_3D"/>
+		<property name="anchorX_1M"/>
+		<property name="anchorY_1M"/>
+		<property name="anchorX_2M"/>
+		<property name="anchorY_2M"/>
+		<property name="anchorX_4G"/>
+		<property name="anchorY_4G"/>
+		<property name="anchorX_5M"/>
+		<property name="anchorY_5M"/>
+		<property name="anchorX_3G"/>
+		<property name="anchorY_3G"/>
+		<property name="anchorX_2D"/>
+		<property name="anchorY_2D"/>
+  	</class>
+  	<class name="fr.free.hd.servers.entities.Word" table="Word">
+		<id name="id" column="id">
+			<generator class="identity"/>
+		</id>
+		<property name="word"/>
+		<list name="phonems"
+			table="WORD_PHONEM"
+			lazy="true"
+			cascade="save-update">
+			<key column="WORD_ID"/>
+			<index column="PHONEM_ORDER"/>
+			<many-to-many class="fr.free.hd.servers.entities.Phonem" column="PHONEM_ID"/>
+		</list>
+  	</class>
+</hibernate-mapping>
