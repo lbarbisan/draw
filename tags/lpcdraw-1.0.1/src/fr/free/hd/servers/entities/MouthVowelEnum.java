@@ -1,0 +1,17 @@
+package fr.free.hd.servers.entities;
+
+public enum MouthVowelEnum {
+	MOUTH_VOWEL_O,
+	MOUTH_VOWEL_AU,
+	MOUTH_VOWEL_I,
+	MOUTH_VOWEL_OU,
+	MOUTH_VOWEL_E,
+	MOUTH_VOWEL_AI,
+	MOUTH_VOWEL_EU,
+	MOUTH_VOWEL_ET,
+	MOUTH_VOWEL_IN,
+	MOUTH_VOWEL_ON,
+	MOUTH_VOWEL_EN,
+	MOUTH_VOWEL_U,
+	MOUTH_VOWEL_A,
+}
