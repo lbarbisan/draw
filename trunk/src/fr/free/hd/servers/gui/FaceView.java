@@ -219,8 +219,9 @@ public class FaceView extends AbstractView implements ApplicationListener {
 	
 	private JPanel createPosition()
 	{
-		JPanel panel = new JPanel(new GridLayout(4,0));
+		JPanel panel = new JPanel(new GridLayout(5,0));
 		final JSlider slider =  new JSlider();
+		final JSlider sliderDegree =  new JSlider();
 		final JSlider sliderX =  new JSlider();
 		final JSlider sliderY =  new JSlider();
 		slider.setMinimum(0);
@@ -237,6 +238,13 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		sliderY.setPaintLabels(true);
 		sliderY.setPaintTicks(true);
 		sliderY.setPaintTrack(true);
+		sliderDegree.setMinimum(0);
+		sliderDegree.setMaximum(360);
+		sliderDegree.setMajorTickSpacing(20);
+		sliderDegree.setPaintLabels(true);
+		sliderDegree.setPaintTicks(true);
+		sliderDegree.setPaintTrack(true);
+		
 		
 		final JComboBox box = new JComboBox(HandPositionEnum.values());
 		box.addItemListener(new ItemListener(){
@@ -267,6 +275,30 @@ public class FaceView extends AbstractView implements ApplicationListener {
 					break;
 				case HAND_POSITION_PAUMETTE:
 					face.setPaumetteRatio(slider.getValue());
+					break;
+				}
+				updateLabel();
+			}
+		});
+		sliderDegree.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				switch(position)
+				{
+				case HAND_POSITION_BOUCHE:
+					face.setBoucheDegree(sliderDegree.getValue());
+					break;
+				case HAND_POSITION_COTE:
+					face.setCoteDegree(sliderDegree.getValue());
+					break;
+				case HAND_POSITION_COU:
+					face.setCouDegree(sliderDegree.getValue());
+					break;
+				case HAND_POSITION_MENTON:
+					face.setMentonDegree(sliderDegree.getValue());
+					break;
+				case HAND_POSITION_PAUMETTE:
+					face.setPaumetteDegree(sliderDegree.getValue());
 					break;
 				}
 				updateLabel();

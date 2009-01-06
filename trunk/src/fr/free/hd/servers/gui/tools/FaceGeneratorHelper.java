@@ -206,26 +206,27 @@ public class FaceGeneratorHelper {
     		//Initial Move
     		g.translate(dimension.width*face.getBoucheX() /1000-dimension.width*anchorX/1000,
     					dimension.height*face.getBoucheY() /1000-dimension.height*anchorY/1000);
-    		g.rotate(Math.toRadians(45), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+    		g.rotate(Math.toRadians(face.getBoucheDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	case HAND_POSITION_COTE:
     		g.translate(dimension.width*face.getCoteX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getCoteY() /1000-dimension.height*anchorY/1000);
+    		g.rotate(Math.toRadians(face.getCoteDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	case HAND_POSITION_COU:
             g.translate(dimension.width*face.getCouX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getCouY() /1000-dimension.height*anchorY/1000);
-            g.rotate(Math.toRadians(90), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            g.rotate(Math.toRadians(face.getCouDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	case HAND_POSITION_MENTON:
             g.translate(dimension.width*face.getMentonX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getMentonY() /1000-dimension.height*anchorY/1000);
-            g.rotate(Math.toRadians(45), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            g.rotate(Math.toRadians(face.getMentonDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	case HAND_POSITION_PAUMETTE:
     		g.translate(dimension.width*face.getPaumetteX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getPaumetteY() /1000 -dimension.height*anchorY/1000);
-    		g.rotate(Math.toRadians(60), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+    		g.rotate(Math.toRadians(face.getPaumetteDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
     		break;
     	}
     	

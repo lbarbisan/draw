@@ -15,18 +15,23 @@ public class Face extends BaseEntity {
 	private int boucheRatio = 300;
 	private int boucheX = 400;
 	private int boucheY = 600;
+	private int boucheDegree = 45;
 	private int coteRatio = 300;
 	private int coteX = 0;
 	private int coteY = 400;
+	private int coteDegree = 0;
 	private int couRatio = 300;
 	private int couX = 400;
 	private int couY = 800;
+	private int couDegree = 90;
 	private int mentonRatio = 300;
 	private int mentonX = 500;
 	private int mentonY = 700;
+	private int mentonDegree = 75;
 	private int paumetteRatio = 300;
 	private int paumetteX = 300;
 	private int paumetteY = 500;
+	private int paumetteDegree = 60;
 	
 	private int anchorX_2V;
 	private int anchorX_3D;
@@ -254,5 +259,35 @@ public class Face extends BaseEntity {
 	}
 	public void setPaumetteY(int paumetteY) {
 		this.paumetteY = paumetteY;
+	}
+	public int getBoucheDegree() {
+		return boucheDegree;
+	}
+	public void setBoucheDegree(int boucheDegree) {
+		this.boucheDegree = boucheDegree;
+	}
+	public int getCoteDegree() {
+		return coteDegree;
+	}
+	public void setCoteDegree(int coteDegree) {
+		this.coteDegree = coteDegree;
+	}
+	public int getCouDegree() {
+		return couDegree;
+	}
+	public void setCouDegree(int couDegree) {
+		this.couDegree = couDegree;
+	}
+	public int getMentonDegree() {
+		return mentonDegree;
+	}
+	public void setMentonDegree(int mentonDegree) {
+		this.mentonDegree = mentonDegree;
+	}
+	public int getPaumetteDegree() {
+		return paumetteDegree;
+	}
+	public void setPaumetteDegree(int paumetteDegree) {
+		this.paumetteDegree = paumetteDegree;
 	}
 }
