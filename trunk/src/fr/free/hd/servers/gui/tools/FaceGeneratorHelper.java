@@ -21,6 +21,7 @@ import org.springframework.richclient.progress.ProgressMonitor;
 
 import fr.free.hd.servers.LPCDraw;
 import fr.free.hd.servers.entities.Face;
+import fr.free.hd.servers.entities.HandKeyEnum;
 import fr.free.hd.servers.entities.Phonem;
 
 public class FaceGeneratorHelper {
@@ -216,12 +217,28 @@ public class FaceGeneratorHelper {
     	case HAND_POSITION_COU:
             g.translate(dimension.width*face.getCouX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getCouY() /1000-dimension.height*anchorY/1000);
-            g.rotate(Math.toRadians(face.getCouDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            //HACK : Pour la clef 2V, petit problème donc on force la position
+            if(phonem.getHandKey()==HandKeyEnum.HAND_KEY_2V)
+            {
+            	g.rotate(Math.toRadians(65), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            }
+            else            	
+            {
+            	g.rotate(Math.toRadians(face.getCouDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            }
     		break;
     	case HAND_POSITION_MENTON:
             g.translate(dimension.width*face.getMentonX() /1000-dimension.width*anchorX/1000,
 						dimension.height*face.getMentonY() /1000-dimension.height*anchorY/1000);
-            g.rotate(Math.toRadians(face.getMentonDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            //HACK : Pour la clef 2V, petit problème donc on force la position
+            if(phonem.getHandKey()==HandKeyEnum.HAND_KEY_2V)
+            {
+            	g.rotate(Math.toRadians(30), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            }
+            else            	
+            {
+            	g.rotate(Math.toRadians(face.getMentonDegree()), dimension.width*anchorX/1000, dimension.height*anchorY/1000);
+            }
     		break;
     	case HAND_POSITION_PAUMETTE:
     		g.translate(dimension.width*face.getPaumetteX() /1000-dimension.width*anchorX/1000,
@@ -271,7 +288,6 @@ public class FaceGeneratorHelper {
     	if(!cachedImage.containsKey(faceImagePath))
     	{
     		try {
-    			System.out.println(LPCDraw.class.getResource(faceImagePath));
     			face = ImageIO.read(LPCDraw.class.getResource(faceImagePath));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

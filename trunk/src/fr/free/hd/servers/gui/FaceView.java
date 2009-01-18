@@ -355,6 +355,7 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		panel.add(slider);
 		panel.add(sliderX);
 		panel.add(sliderY);
+		panel.add(sliderDegree);
 		return panel;
 	}
 	
