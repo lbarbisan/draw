@@ -217,6 +217,7 @@
       <map>
         <entry key="phonemsDAO" value-ref="PhonemsDAO" />
         <entry key="facesDAO" value-ref="FaceDAO" />
+        <entry key="faceName" value="VisageEnfant.png" />
       </map>
     </property>
   </bean>

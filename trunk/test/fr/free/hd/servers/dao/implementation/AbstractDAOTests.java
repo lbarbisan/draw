@@ -1,20 +1,8 @@
 package fr.free.hd.servers.dao.implementation;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collection;
-
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.Clinic;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
-import fr.free.hd.servers.dao.PhonemsDAO;
-import fr.free.hd.servers.entities.HandKeyEnum;
-import fr.free.hd.servers.entities.HandPositionEnum;
-import fr.free.hd.servers.entities.MouthVowelEnum;
-import fr.free.hd.servers.entities.Phonem;
 
 /**
  * <p>

@@ -61,6 +61,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 	protected PhonemsDAO phonemsDAO;
 	protected FaceDAO facesDao;
+	protected String faceName;
 
 	protected PrintCommand printCommand = new PrintCommand();
 	protected CopyCommandPhonem copyCommand = new CopyCommandPhonem();
@@ -95,7 +96,7 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		}
 
 		final StatementListModel model = new StatementListModel(mapList);
-		final Face face = facesDao.findFace("Visage.jpg");
+		final Face face = facesDao.findFace(faceName);
 
 		printCommand.setModel(model);
 		printCommand.setFace(face);
@@ -156,6 +157,14 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		field.requestFocus();
 		
 		return view;
+	}
+
+	public String getFaceName() {
+		return faceName;
+	}
+
+	public void setFaceName(String faceName) {
+		this.faceName = faceName;
 	}
 
 	@Override

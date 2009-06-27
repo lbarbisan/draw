@@ -49,7 +49,7 @@ public class FaceGeneratorHelper {
     	if(!cachedFinalImage.containsKey(phonem))
     	{
 	    	//Get Face
-	    	Image faceImage = getFace();
+	    	Image faceImage = getFace(face);
 	    	if(pm!= null) pm.worked(20);
 	    	faceImage = makeColorTransparent(faceImage, Color.GREEN);
 	    	if(pm!= null) pm.worked(30);
@@ -281,14 +281,14 @@ public class FaceGeneratorHelper {
     						face.getMouthYPercent()*dimension.height/1000 - mouth.getHeight(null)/2, null);
     }
     
-    private static Image getFace()
+    private static Image getFace(Face face)
     {
-    	String faceImagePath = "Visage.png";
-    	Image face = null;
+    	String faceImagePath = face.getPicture();
+    	Image facePicture = null;
     	if(!cachedImage.containsKey(faceImagePath))
     	{
     		try {
-    			face = ImageIO.read(LPCDraw.class.getResource(faceImagePath));
+    			facePicture = ImageIO.read(LPCDraw.class.getResource(faceImagePath));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -296,9 +296,9 @@ public class FaceGeneratorHelper {
     	}
     	else
     	{
-    		face = cachedImage.get(faceImagePath);
+    		facePicture = cachedImage.get(faceImagePath);
     	}
-        return face;
+        return facePicture;
     }
     
     private static  Image makeColorTransparent

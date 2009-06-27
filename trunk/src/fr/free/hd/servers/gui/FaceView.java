@@ -25,6 +25,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collection;
 
+import javax.faces.event.FacesListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -107,7 +108,23 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		c.weighty = 0.75;
 		c.weightx = 0.15;
 		c.fill = GridBagConstraints.BOTH;
-		JList facesList = CreateList(); 
+		final JList facesList = CreateList();
+		facesList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				  if (e.getValueIsAdjusting() == false) {
+				        if (facesList.getSelectedIndex() != -1) {
+				        	face = (Face)facesList.getSelectedValue();
+				        	updateLabel();	
+				        }
+				        else
+				        {
+				        
+				        }
+				    }				
+			}
+		});
 		view.add(facesList, c);
 		
 		// New button
@@ -186,6 +203,14 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		c.fill = GridBagConstraints.BOTH;
 		JButton btnBrownse= new JButton("Browse");
 		view.add(btnBrownse, c);
+		
+		//Select default face
+		if(facesList.getModel().getSize()> 0)
+		{
+			facesList.setSelectedIndex(0);
+			position = HandPositionEnum.HAND_POSITION_MENTON;
+			kind = HandKeyEnum.HAND_KEY_2V;
+		}
 		
 		return view;
 	}
