@@ -36,6 +36,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
+import org.springframework.richclient.command.CommandGroup;
 import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.richclient.dialog.CloseAction;
 
@@ -44,6 +45,7 @@ import fr.free.hd.servers.dao.PhonemsDAO;
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.entities.Phonem;
 import fr.free.hd.servers.gui.command.CopyCommandPhonem;
+import fr.free.hd.servers.gui.command.FaceSelectorCommand;
 import fr.free.hd.servers.gui.command.PrintCommand;
 
 /**
@@ -61,8 +63,9 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 	protected PhonemsDAO phonemsDAO;
 	protected FaceDAO facesDao;
-	protected String faceName;
-
+	protected Face face;
+	protected JList list = null;
+	
 	protected PrintCommand printCommand = new PrintCommand();
 	protected CopyCommandPhonem copyCommand = new CopyCommandPhonem();
 
@@ -96,14 +99,13 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		}
 
 		final StatementListModel model = new StatementListModel(mapList);
-		final Face face = facesDao.findFace(faceName);
-
+		
 		printCommand.setModel(model);
 		printCommand.setFace(face);
 		copyCommand.setModel(model);
 		copyCommand.setFace(face);
 
-		final JList list = new JList(model);
+		list = new JList(model);
 		final JScrollPane sp = new JScrollPane(list);
 		final JTextField field = new JTextField();
 		field.getDocument().addDocumentListener(new DocumentListener() {
@@ -138,9 +140,6 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 									.getElementAt(phonemList.getSelectedIndex());
 							field.setText(field.getText()
 									+ innerPhonem.getPhonem());
-							// model.setString(field.getText());
-							// oldIndex = e.getFirstIndex();
-
 						}
 					}
 				});
@@ -159,18 +158,30 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 		return view;
 	}
 
-	public String getFaceName() {
-		return faceName;
-	}
 
 	public void setFaceName(String faceName) {
-		this.faceName = faceName;
+		face = facesDao.findFace(faceName);
 	}
 
 	@Override
 	protected void registerLocalCommandExecutors(PageComponentContext context) {
 		context.register("PrintCommand", printCommand);
 		context.register(GlobalCommandIds.COPY, copyCommand);
+		
+		/*Collection<Face> faces = facesDao.getFaces(); 
+		Object[] objects = new Object[faces.size()];
+		
+		FaceSelectorCommand command = null;
+		for(int index = 0;index < objects.length; index++)
+		{
+			command = new FaceSelectorCommand(face);
+			getCommandConfigurer().configure(command);
+			objects[index] = command;
+		}
+		
+		CommandGroup group = getWindowCommandManager().createCommandGroup("FacesGroup", objects);
+		context.register("FacesMenu", group);
+		context.register("optionMenu", group);*/
 	}
 
 	public PhonemsDAO getPhonemsDAO() {
@@ -187,5 +198,12 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 	public void setFacesDAO(FaceDAO facesDao) {
 		this.facesDao = facesDao;
+	}
+
+	public void setFace(Face face) {
+		this.face = face;
+		printCommand.setFace(face);
+		copyCommand.setFace(face);
+		list.setCellRenderer(new StatementPhonemListRenderer(face));
 	}
 }

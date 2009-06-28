@@ -8,6 +8,7 @@
     <property name="sharedCommandIds">
       <list>
         <value>PrintCommand</value>
+        <value>FacesMenu</value>
         <value>copyCommand</value>
       </list>
     </property>
@@ -18,6 +19,7 @@
       <list>
         <ref bean="fileMenu" />
         <ref bean="editMenu" />
+        <!--<ref bean="optionMenu" />-->
         <ref bean="windowMenu" />
         <!-- <ref bean="helpMenu" /> -->
       </list>
@@ -81,6 +83,14 @@
     <property name="members">
       <list>
         <bean class="org.springframework.richclient.command.support.ShowViewMenu" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="optionMenu" class="org.springframework.richclient.command.CommandGroupFactoryBean">
+    <property name="members">
+      <list>
+       	<value>FacesMenu</value>
       </list>
     </property>
   </bean>
