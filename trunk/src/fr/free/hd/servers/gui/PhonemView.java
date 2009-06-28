@@ -167,21 +167,15 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 	protected void registerLocalCommandExecutors(PageComponentContext context) {
 		context.register("PrintCommand", printCommand);
 		context.register(GlobalCommandIds.COPY, copyCommand);
-		
-		/*Collection<Face> faces = facesDao.getFaces(); 
-		Object[] objects = new Object[faces.size()];
-		
+		Collection<Face> faces = facesDao.getFaces(); 
 		FaceSelectorCommand command = null;
-		for(int index = 0;index < objects.length; index++)
+		int index = 0;
+		for(Face face : faces)
 		{
-			command = new FaceSelectorCommand(face);
-			getCommandConfigurer().configure(command);
-			objects[index] = command;
+			command = new FaceSelectorCommand(this, face, "face" + index);
+			context.register("face" + index, command);
+			index++;
 		}
-		
-		CommandGroup group = getWindowCommandManager().createCommandGroup("FacesGroup", objects);
-		context.register("FacesMenu", group);
-		context.register("optionMenu", group);*/
 	}
 
 	public PhonemsDAO getPhonemsDAO() {

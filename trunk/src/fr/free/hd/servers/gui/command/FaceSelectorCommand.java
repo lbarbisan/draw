@@ -1,29 +1,26 @@
 package fr.free.hd.servers.gui.command;
 
+import org.springframework.richclient.command.ActionCommand;
 import org.springframework.richclient.command.support.ApplicationWindowAwareCommand;
 
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.gui.PhonemView;
 
-public class FaceSelectorCommand extends ApplicationWindowAwareCommand  {
+public class FaceSelectorCommand extends ActionCommand  {
 
 	private Face face;
-	
-	public FaceSelectorCommand()
-	{
-		super("FaceSelectorCommand");
-	}
-	
+	private PhonemView view;
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 
 
-	public FaceSelectorCommand(Face face)
+	public FaceSelectorCommand(PhonemView view, Face face, String name)
 	{
-		super(face.getPicture());
+		super(name);
 		this.face = face;
+		this.view = view;
 	}
 	
 
@@ -32,7 +29,6 @@ public class FaceSelectorCommand extends ApplicationWindowAwareCommand  {
 	 */
 	@Override
 	protected void doExecuteCommand() {
-		PhonemView view = (PhonemView)getApplicationWindow().getPage().getView("PhonemView");
 		view.setFace(face);
 	}
 
