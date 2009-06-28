@@ -10,8 +10,8 @@
   <property name="dist"  location="dist"/>
 
   <target name="dist" description="generate the distribution" >
-  	<copy todir="${build}">
-  	    <fileset dir="lib" excludes="**/*.jar"/>
+  	<copy todir="${dist}">
+  	    <fileset dir="lib" includes="**/*.jar"/>
 	</copy>
     <jar destfile="${dist}/lpcdraw.jar">
     <fileset dir="${build}" />
