@@ -7,7 +7,7 @@
   <property name="src" location="src"/>
   <property name="rsc" location="rsc"/>
   <property name="build" location="bin"/>
-  <property name="dist"  location="dist"/>
+  <property name="dist"  location="..\dist"/>
 
   <target name="dist" description="generate the distribution" >
   	<copy todir="${dist}">
