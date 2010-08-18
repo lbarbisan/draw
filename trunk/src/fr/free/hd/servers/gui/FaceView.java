@@ -541,7 +541,7 @@ public class FaceView extends AbstractView implements ApplicationListener {
 		ApplicationWindow aw = Application.instance().getActiveWindow();  
 		final ProgressMonitor pm = aw.getStatusBar().getProgressMonitor();  
 		pm.taskStarted("Rendering picture", -1);  
-		SwingWorker sw = new SwingWorker() {  
+		SwingWorker<Object, Object> sw = new SwingWorker<Object, Object>() {  
 		            //protected Object construct() in SpringRC's SwingWorker!  
 		            protected Object doInBackground() {  
 		                // now my long task and the progress indication  

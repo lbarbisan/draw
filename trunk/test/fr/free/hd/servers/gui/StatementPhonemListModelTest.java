@@ -1,11 +1,8 @@
 package fr.free.hd.servers.gui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 
 import junit.framework.Assert;
@@ -21,7 +18,6 @@ import fr.free.hd.servers.entities.Phonem;
 public class StatementPhonemListModelTest {
 
 	private StatementListModel model = null;
-	private JTextField field;
 	private Map<String, Phonem> maps;
 	
 	@Before()

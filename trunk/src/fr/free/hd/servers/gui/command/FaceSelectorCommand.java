@@ -1,7 +1,6 @@
 package fr.free.hd.servers.gui.command;
 
 import org.springframework.richclient.command.ActionCommand;
-import org.springframework.richclient.command.support.ApplicationWindowAwareCommand;
 
 import fr.free.hd.servers.entities.Face;
 import fr.free.hd.servers.gui.PhonemView;

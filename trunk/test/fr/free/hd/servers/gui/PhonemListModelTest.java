@@ -15,7 +15,7 @@ public class PhonemListModelTest {
 
 	@Test(expected=NullPointerException.class)
 	public void testPhonemListModelException() {
-		PhonemListModel model = new PhonemListModel(null);
+		new PhonemListModel(null);
 	}
 
 	@Test

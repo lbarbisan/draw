@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
 import javax.swing.SwingWorker;
 
 import org.springframework.richclient.application.Application;
@@ -15,7 +14,6 @@ import org.springframework.richclient.command.ActionCommand;
 import org.springframework.richclient.progress.ProgressMonitor;
 
 import fr.free.hd.servers.entities.Face;
-import fr.free.hd.servers.entities.MouthVowelEnum;
 import fr.free.hd.servers.entities.Phonem;
 import fr.free.hd.servers.gui.StatementListModel;
 import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
@@ -32,7 +30,7 @@ public class CopyCommandPhonem extends ActionCommand {
 		ApplicationWindow aw = Application.instance().getActiveWindow();  
 		final ProgressMonitor pm = aw.getStatusBar().getProgressMonitor();
 		pm.taskStarted("Copying...", -1);  
-		SwingWorker sw = new SwingWorker() {  
+		SwingWorker<Object, Object> sw = new SwingWorker<Object, Object>() {  
 		            //protected Object construct() in SpringRC's SwingWorker!  
 		            protected Object doInBackground() {
 		            	int total = 0;
