@@ -46,6 +46,7 @@ import fr.free.hd.servers.entities.Phonem;
 import fr.free.hd.servers.gui.command.CopyCommandPhonem;
 import fr.free.hd.servers.gui.command.FaceSelectorCommand;
 import fr.free.hd.servers.gui.command.PrintCommand;
+import fr.free.hd.servers.gui.tools.FaceGeneratorHelper;
 
 /**
  * Shows the owners and their pets in a tree structure.
@@ -195,8 +196,14 @@ public class PhonemView extends AbstractView implements ApplicationListener {
 
 	public void setFace(Face face) {
 		this.face = face;
+		
+		//Re-sync all face to use new face
+		FaceGeneratorHelper.ClearCache();
+		list.setCellRenderer(new StatementPhonemListRenderer(face));
+		list.updateUI();
+		
 		printCommand.setFace(face);
 		copyCommand.setFace(face);
-		list.setCellRenderer(new StatementPhonemListRenderer(face));
+		
 	}
 }
