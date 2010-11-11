@@ -9,6 +9,7 @@
       <list>
         <value>PrintCommand</value>
         <value>copyCommand</value>
+        <!--<value>helpCommand</value>-->
         <value>face0</value>
         <value>face1</value>
         <value>face2</value>
@@ -23,7 +24,7 @@
         <ref bean="editMenu" />
         <ref bean="optionMenu" />
         <ref bean="windowMenu" />
-        <!-- <ref bean="helpMenu" /> -->
+        <ref bean="helpMenu" />
       </list>
     </property>
   </bean>
@@ -98,18 +99,20 @@
       </list>
     </property>
   </bean>
-  
-<!--   
+
   <bean id="helpMenu" class="org.springframework.richclient.command.CommandGroupFactoryBean">
     <property name="members">
       <list>
-        <ref bean="helpContentsCommand" />
-        <value>separator</value>
-        <ref bean="aboutCommand" />
+        <ref bean="helpCommand" />
+        <!-- <value>separator</value>
+        <ref bean="aboutCommand" />  -->
       </list>
     </property>
   </bean>
+  
+  <bean id="helpCommand" class="fr.free.hd.servers.gui.command.HelpCommand"/>
 
+<!--   
   <bean id="helpContentsCommand" class="org.springframework.richclient.command.support.HelpContentsCommand" />
 
   <bean id="aboutCommand" class="org.springframework.richclient.command.support.AboutCommand">

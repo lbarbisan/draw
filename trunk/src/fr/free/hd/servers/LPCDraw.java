@@ -26,7 +26,7 @@ public class LPCDraw {
     public static void main(String[] args) {
         String rootContextDirectoryClassPath = "/fr/free/hd/servers/";
 
-        //String startupContextPath = rootContextDirectoryClassPath + "richclient-startup-context.xml";
+        String startupContextPath = rootContextDirectoryClassPath + "LPCDraw-startup-context.xml";
 
         String richclientApplicationContextPath = rootContextDirectoryClassPath
                 + "LPCDraw-application-context.xml";
@@ -36,7 +36,7 @@ public class LPCDraw {
         //String securityContextPath = rootContextDirectoryClassPath + "/standalone/security-context.xml";
 
         try {
-            new ApplicationLauncher(null, new String[] { richclientApplicationContextPath,
+            new ApplicationLauncher(startupContextPath, new String[] { richclientApplicationContextPath,
                     businessLayerContextPath /*, securityContextPath */ });
         } catch (RuntimeException e) {
             LogFactory.getLog(LPCDraw.class).error("RuntimeException during startup", e);

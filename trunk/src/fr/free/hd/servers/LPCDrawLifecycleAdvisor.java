@@ -56,6 +56,6 @@ public class LPCDrawLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor
 	public void onWindowOpened(ApplicationWindow window) {
 		super.onWindowOpened(window);
 		
-		Application.instance().getActiveWindow().getStatusBar().setMessage("Version 1.0.4");
+		Application.instance().getActiveWindow().getStatusBar().setMessage("Version 1.0.5");
 	}   
 }
