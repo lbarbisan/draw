@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<jnlp spec="1.5+"codebase="" href="LePcCodeur.jnlp">
+  <information>
+    <title>Le PC Codeur</title>
+    <vendor>Laurent Barbsian</vendor>
+    <description>Application de generation de facies LPC</description>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+				<jar href="bin/lpcdraw.jar" download="eager"/>
+                <jar href="bin/antlr-2.7.6.jar" download="eager"/>
+                <jar href="bin/aopalliance.jar" download="eager"/>
+                <jar href="bin/commons-collections.jar" download="eager"/>
+                <jar href="bin/commons-logging.jar" download="eager"/>
+                <jar href="bin/dom4j-1.6.1.jar" download="eager"/>
+                <jar href="bin/hibernate3.jar" download="eager"/>
+                <jar href="bin/hsqldb.jar" download="eager"/>
+                <jar href="bin/iText-2.1.3.jar" download="eager"/>
+                <jar href="bin/jta.jar" download="eager"/>
+                <jar href="bin/log4j-1.2.15.jar" download="eager"/>
+                <jar href="bin/looks-2.2.0.jar" download="eager"/>
+                <jar href="bin/persistence-api-1.0.jar" download="eager"/>
+                <jar href="bin/slf4j-api-1.5.0.jar" download="eager"/>
+                <jar href="bin/slf4j-log4j12-1.5.0.jar" download="eager"/>
+                <jar href="bin/spring-aop.jar" download="eager"/>
+                <jar href="bin/spring-beans.jar" download="eager"/>
+                <jar href="bin/spring-binding-1.0.5.jar" download="eager"/>
+                <jar href="bin/spring-context-support.jar" download="eager"/>
+                <jar href="bin/spring-context.jar" download="eager"/>
+                <jar href="bin/spring-core.jar" download="eager"/>
+                <jar href="bin/spring-jdbc.jar" download="eager"/>
+                <jar href="bin/spring-orm.jar" download="eager"/>
+                <jar href="bin/spring-richclient-core-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-richclient-jdk6-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-richclient-resources-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-richclient-sandbox-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-richclient-swingdocking-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-richclient-vldocking-1.1.0.jar" download="eager"/>
+                <jar href="bin/spring-test.jar" download="eager"/>
+                <jar href="bin/spring-tx.jar" download="eager"/>
+                <jar href="bin/spring.jar" download="eager"/>
+  </resources>
+  <application-desc main-class="fr.free.hd.servers.LPCDraw"/>
+</jnlp>
