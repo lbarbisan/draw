@@ -1,5 +1,6 @@
 package fr.free.hd.servers.gui.command;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,32 +18,25 @@ public class HelpCommand extends ActionCommand {
 	protected void doExecuteCommand() {
 
 		try {
+			
+			//Depends of
 			String filename = "Prise_en_main_logiciel.pdf";
-			
-			boolean exists = (new File(filename)).exists();
-			if (exists) {
-			
-			Process process = Runtime
-					.getRuntime()
-					.exec(
-							"rundll32 url.dll,FileProtocolHandler " + filename);
-			process.waitFor();
-			if(process.exitValue()!=0)
-				showErrorMessage("Process exit with return code greater than 0.");
-			}
-			else
+			File file = new File(filename);
+			if(!file.exists())
 			{
-				showErrorMessage("File " + filename + " doesn't exist.");
+				filename = ".." + File.separator  + filename;
+				file = new File(filename);
+				file = file.getCanonicalFile();
 			}
+			
+			Desktop.getDesktop().open(file);
+			
 		} catch (IOException e) {
-			showErrorMessage(e.getMessage());	
-		} catch (InterruptedException e) {
-			showErrorMessage(e.getMessage());	
+			showErrorMessage(e.getLocalizedMessage());
 		}
-
 	}
 	
-	protected void showErrorMessage(String error)
+	protected static void showErrorMessage(String error)
 	{
 		JOptionPane
 		.showMessageDialog(

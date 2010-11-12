@@ -36,6 +36,5 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/spring-binding-1.0.5.jar"/>
-	<classpathentry kind="con" path="DROOLS/Drools"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

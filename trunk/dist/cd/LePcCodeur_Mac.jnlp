@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<jnlp spec="1.5+"codebase="" href="LePcCodeur.jnlp">
+<jnlp spec="1.6+"codebase="" href="LePcCodeur.jnlp">
   <information>
     <title>Le PC Codeur</title>
     <vendor>Laurent Barbsian</vendor>

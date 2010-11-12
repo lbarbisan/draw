@@ -1,6 +1,7 @@
 package fr.free.hd.servers.gui.command;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,7 +44,7 @@ public class PrintCommand extends ActionCommand {
         Document document = new Document(PageSize.A4.rotate());
         
         // Create temp file.
-        File temp;
+        File temp = null;
 		try {
 			temp = File.createTempFile("lpcdraw", ".pdf");
 			// Delete temp file when program exits.
@@ -59,17 +60,14 @@ public class PrintCommand extends ActionCommand {
         
         	document.close();
             
-			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + temp.getAbsolutePath());
-            
+            Desktop.getDesktop().open(new File(temp.getAbsolutePath()));
         }
         catch(DocumentException de) {
-            System.err.println(de.getMessage());
+            HelpCommand.showErrorMessage(de.getLocalizedMessage());
         } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        	HelpCommand.showErrorMessage(e.getLocalizedMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			HelpCommand.showErrorMessage(e.getLocalizedMessage());
 		}
 	}
 
