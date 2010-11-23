@@ -222,7 +222,7 @@
     </property>
   </bean>
   
-  <bean id="FaceView"
+  <!-- <bean id="FaceView"
     class="org.springframework.richclient.application.support.DefaultViewDescriptor">
     <property name="viewClass" value="fr.free.hd.servers.gui.FaceView" />
     <property name="viewProperties">
@@ -231,7 +231,7 @@
       </map>
     </property>
   </bean>
-<!--
+
   <bean id="vetManagerView"
     class="org.springframework.richclient.application.support.DefaultViewDescriptor">
     <property name="viewClass" value="org.springframework.richclient.samples.petclinic.ui.VetManagerView" />

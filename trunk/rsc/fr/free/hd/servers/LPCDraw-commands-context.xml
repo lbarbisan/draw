@@ -94,8 +94,8 @@
     <property name="members">
       <list>
        	<value>face0</value>
-       	<value>face1</value>
-       	<value>face2</value>
+       	<!-- <value>face1</value> -->
+       	<!-- <value>face2</value> -->
       </list>
     </property>
   </bean>
